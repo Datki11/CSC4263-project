@@ -11,6 +11,7 @@ public class BattleManager : MonoBehaviour
     public GameObject abilityText;
     public GameObject abilityMenuSelection;
     public GameObject unitSelection;
+    public GameObject damageText;
     public Text abilityDescriptionText;
     private int playerMenuPos = 0;
     private int unitSelectionPos = 0;
@@ -19,17 +20,29 @@ public class BattleManager : MonoBehaviour
     private List<Ability> _abilities;
     private int abilityMenuPos = 0;
     private List<GameObject> abilityTexts;
+
+    private static BattleManager _instance;
+
+    public static BattleManager Instance { get { return _instance; } }
     
     private enum Turn {
         Player,
         Enemy
     }
     private Turn turn = Turn.Player;
+    private int turnPos = 0;
     void Awake()
     {
         characters = new List<GameObject>(GameObject.FindGameObjectsWithTag("PlayerUnit"));
         enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemyUnit"));
-        NextTurn();
+
+        //Singleton
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        } else {
+            _instance = this;
+        }
     }
 
     // Update is called once per frame
@@ -92,11 +105,66 @@ public class BattleManager : MonoBehaviour
                 unitSelection.SetActive(true);
                 UpdateUnitSelection();
             }
+            else if (unitSelection.activeSelf) {
+                _abilities[abilityMenuPos].Action(enemies[unitSelectionPos].GetComponent<Enemy>());
+                unitSelection.SetActive(false);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (playerAbilityMenu.activeSelf) {
+                playerAbilityMenu.SetActive(false);
+                playerMenu.SetActive(true);
+            }
+            else if (unitSelection.activeSelf) {
+                unitSelection.SetActive(false);
+                playerAbilityMenu.SetActive(true);
+            }
         }
     }
 
     void NextTurn() {
+        enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemyUnit"));
+        unitSelectionPos = 0;
 
+        //Currently, this is set up to where the max party size for the player is 1
+        if (turn == Turn.Player) {
+            turn = Turn.Enemy;
+            turnPos = 0;
+            DoEnemyTurn();
+        }
+        else {
+            turnPos++;
+            if (turnPos > enemies.Count - 1) {
+                turn = Turn.Player;
+                playerMenu.SetActive(true);
+            }
+            else {
+                DoEnemyTurn();
+            }
+        }
+    }
+
+    void DoEnemyTurn() {
+        Enemy e = enemies[turnPos].GetComponent<Enemy>();
+        e.Act();
+    }
+
+    void UnitDeathEnd() {
+        Invoke("NextTurn",0.2f);
+    }
+
+    void CheckUnitStatuses() {
+        bool unitIsDying = false;
+        foreach(GameObject e in enemies) {
+            if (e.GetComponent<Enemy>().CurrentHealth <= 0) {
+                e.GetComponent<Enemy>().Kill();
+                e.GetComponent<Enemy>().killed.AddListener(UnitDeathEnd);
+                unitIsDying = true;
+            }
+        }
+        if (!unitIsDying) {
+            Invoke("NextTurn",0.3f);
+        }
     }
 
     void PopulateAbilityMenu(List<Ability> abilities) {
@@ -141,5 +209,27 @@ public class BattleManager : MonoBehaviour
         if (unitSelectionPos > enemies.Count - 1)
             unitSelectionPos = 0;
         UpdateUnitSelection();
+    }
+
+    public void InflictDamage(Unit target, float damage) {
+        target.CurrentHealth -= (int) damage;
+        var pos = target.gameObject.transform.position;
+        var o = Instantiate(damageText, pos + new Vector3(0.25f,target.gameObject.GetComponent<SpriteRenderer>().bounds.size.y / 2,0), Quaternion.identity);
+        var dText = o.GetComponent<DamageText>();
+        dText.SetText( (int) damage );
+        if (turn == Turn.Player) {
+            dText.destroyed.AddListener(CheckUnitStatuses);
+        }
+        else {
+            dText.destroyed.AddListener(EndEnemyTurn);
+        }
+    }
+
+    private void EndEnemyTurn() {
+        Invoke("NextTurn",0.4f);
+    }
+
+    public List<GameObject> GetCharacters() {
+        return characters;
     }
 }

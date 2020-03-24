@@ -17,4 +17,8 @@ public class FocusEnergy : Ability
     {
         
     }
+
+    public override void Action(Unit target) {
+        //Do something
+    }
 }

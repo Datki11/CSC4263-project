@@ -19,4 +19,8 @@ public class Whirlwind : Ability
     {
         
     }
+
+    public override void Action(Unit target) {
+        //Do something
+    }
 }

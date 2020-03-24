@@ -2,21 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract class Character : MonoBehaviour
+public abstract class Character : Unit
 {
 
     #region Public Properties
     public abstract ICharClass Class
-	{
-		get;
-		set;
-	}
-	public abstract int MaxHealth
-	{
-		get;
-		set;
-	}
-	public abstract int CurrentHealth
 	{
 		get;
 		set;
@@ -32,22 +22,6 @@ abstract class Character : MonoBehaviour
 		set;
 	}
 
-	//possibly wrap below stats, maybe health too, in a Stats class
-	public abstract int Attack
-	{
-		get;
-		set;
-	}
-	public abstract int Defense
-	{
-		get;
-		set;
-	}
-	public abstract int Speed
-	{
-		get;
-		set;
-	}
     #endregion
 
     #region Methods

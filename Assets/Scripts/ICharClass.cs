@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract class ICharClass
+public abstract class ICharClass
 {
 
     #region Public Properties

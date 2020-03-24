@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-class Magician : ICharClass
+public class Magician : ICharClass
 {
 	#region Public Properties
 	public override List<Ability> Abilities

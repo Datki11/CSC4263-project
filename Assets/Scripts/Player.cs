@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-class Player : Character
+public class Player : Character
 {
 	#region Public Properties
 	public override ICharClass Class

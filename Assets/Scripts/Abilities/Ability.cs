@@ -11,4 +11,6 @@ public abstract class Ability
     Character Target;
 
     float powerRange;
+    public abstract void Action(Unit target);
+
 }

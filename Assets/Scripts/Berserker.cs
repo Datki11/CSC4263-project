@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-class Berserker : ICharClass
+public class Berserker : ICharClass
 {
 
 	#region Public Properties
