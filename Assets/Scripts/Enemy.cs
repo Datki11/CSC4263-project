@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 public abstract class Enemy : Unit
 {
-	public UnityEvent killed;
 	public List<Ability> Abilities {
 		get;
 		set;
@@ -37,9 +36,6 @@ public abstract class Enemy : Unit
 		set;
 	}
 
-	public void Awake() {
-		render = GetComponent<SpriteRenderer>();
-	}
 
 	private float startX;
 
@@ -72,22 +68,6 @@ public abstract class Enemy : Unit
 		}
 		else {
 			Invoke("GoLeft", 0.01f);
-		}
-	}
-
-	public void Kill() {
-		KillAnimate();
-	}
-	private void KillAnimate() {
-		float alpha = GetComponent<SpriteRenderer>().color.a - 2 * Time.deltaTime;
-		GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f, alpha);
-		if (alpha > 0) {
-			Invoke("KillAnimate",0.01f);
-		}
-		else {
-			gameObject.tag = "dead";
-			killed.Invoke();
-			Destroy(gameObject);
 		}
 	}
 }

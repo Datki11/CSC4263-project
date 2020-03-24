@@ -13,6 +13,7 @@ public class BattleManager : MonoBehaviour
     public GameObject unitSelection;
     public GameObject damageText;
     public Text abilityDescriptionText;
+    public GameObject gameOverScreen;
     private int playerMenuPos = 0;
     private int unitSelectionPos = 0;
     private List<GameObject> characters;
@@ -152,14 +153,32 @@ public class BattleManager : MonoBehaviour
     void UnitDeathEnd() {
         Invoke("NextTurn",0.2f);
     }
+    void PlayerDeathEnd() {
+        Invoke("GameOver", 1f);
+    }
+
+    void GameOver() {
+        Instantiate(gameOverScreen);
+    }
 
     void CheckUnitStatuses() {
         bool unitIsDying = false;
-        foreach(GameObject e in enemies) {
-            if (e.GetComponent<Enemy>().CurrentHealth <= 0) {
-                e.GetComponent<Enemy>().Kill();
-                e.GetComponent<Enemy>().killed.AddListener(UnitDeathEnd);
-                unitIsDying = true;
+        if (turn == Turn.Player) {
+            foreach(GameObject e in enemies) {
+                if (e.GetComponent<Unit>().CurrentHealth <= 0) {
+                    e.GetComponent<Unit>().Kill();
+                    e.GetComponent<Unit>().killed.AddListener(UnitDeathEnd);
+                    unitIsDying = true;
+                }
+            }
+        }
+        else {
+            foreach(GameObject c in characters) {
+                if (c.GetComponent<Unit>().CurrentHealth <= 0) {
+                    c.GetComponent<Unit>().Kill();
+                    c.GetComponent<Unit>().killed.AddListener(PlayerDeathEnd);
+                    unitIsDying = true;
+                }
             }
         }
         if (!unitIsDying) {
@@ -221,7 +240,7 @@ public class BattleManager : MonoBehaviour
             dText.destroyed.AddListener(CheckUnitStatuses);
         }
         else {
-            dText.destroyed.AddListener(EndEnemyTurn);
+            dText.destroyed.AddListener(CheckUnitStatuses);
         }
     }
 
