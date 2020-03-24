@@ -8,19 +8,28 @@ public class BattleManager : MonoBehaviour
     public GameObject playerMenu;
     public GameObject playerMenuSelection;
     public GameObject playerAbilityMenu;
+    public GameObject playerItemMenu;
     public GameObject abilityText;
     public GameObject abilityMenuSelection;
+    public GameObject itemMenuSelection;
     public GameObject unitSelection;
+    public GameObject unitSelectionFriendly;
     public GameObject damageText;
     public Text abilityDescriptionText;
+    public Text itemDescriptionText;
     public GameObject gameOverScreen;
     private int playerMenuPos = 0;
     private int unitSelectionPos = 0;
+    private int unitSelectionFriendlyPos;
     private List<GameObject> characters;
     private List<GameObject> enemies;
     private List<Ability> _abilities;
+    private Dictionary<Item, int> _items;
     private int abilityMenuPos = 0;
+    private int itemMenuPos = 0;
+    private bool usingOffensiveItem = false;
     private List<GameObject> abilityTexts;
+    private List<GameObject> itemTexts;
 
     private static BattleManager _instance;
 
@@ -49,6 +58,10 @@ public class BattleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //This code is for the menu navigation
+
+        #region Menu navigation
+
         if (Input.GetKeyDown(KeyCode.LeftArrow)) {
             if (playerMenu.activeSelf) {
                 playerMenuPos--;
@@ -60,6 +73,8 @@ public class BattleManager : MonoBehaviour
                 UnitSelectionAscend();
             }
         }
+
+
         if (Input.GetKeyDown(KeyCode.RightArrow)) {
             if (playerMenu.activeSelf) {
                 playerMenuPos++;
@@ -71,6 +86,8 @@ public class BattleManager : MonoBehaviour
                 UnitSelectionDescend();
             }   
         }
+
+
         if (Input.GetKeyDown(KeyCode.DownArrow)) {
             if (playerAbilityMenu.activeSelf) {
                 abilityMenuPos++;
@@ -80,8 +97,16 @@ public class BattleManager : MonoBehaviour
             }
             else if (unitSelection.activeSelf) {
                 UnitSelectionDescend();
-            }   
+            }
+            else if (playerItemMenu.activeSelf) {
+                itemMenuPos++;
+                if (itemMenuPos > itemTexts.Count - 1)
+                    itemMenuPos = 0;
+                UpdateItemMenuSelection();
+            }      
         }
+
+
         if (Input.GetKeyDown(KeyCode.UpArrow)) {
             if (playerAbilityMenu.activeSelf) {
                 abilityMenuPos--;
@@ -91,14 +116,27 @@ public class BattleManager : MonoBehaviour
             }
             else if (unitSelection.activeSelf) {
                 UnitSelectionAscend();
-            }   
+            }
+            else if (playerItemMenu.activeSelf) {
+                itemMenuPos--;
+                if (itemMenuPos < 0)
+                    itemMenuPos = itemTexts.Count - 1;
+                UpdateItemMenuSelection();
+            }  
         }
+
+
         if (Input.GetKeyDown(KeyCode.Return)) {
             if (playerMenu.activeSelf) {
                 if (playerMenuPos == 0) {
                     playerMenu.SetActive(false);
                     playerAbilityMenu.SetActive(true);
                     PopulateAbilityMenu(characters[0].GetComponent<Character>().Class.Abilities);
+                }
+                else if (playerMenuPos == 1) {
+                    playerMenu.SetActive(false);
+                    playerItemMenu.SetActive(true);
+                    PopulateItemMenu(characters[0].GetComponent<Player>().Items);
                 }
             }
             else if (playerAbilityMenu.activeSelf) {
@@ -107,10 +145,51 @@ public class BattleManager : MonoBehaviour
                 UpdateUnitSelection();
             }
             else if (unitSelection.activeSelf) {
-                _abilities[abilityMenuPos].Action(enemies[unitSelectionPos].GetComponent<Enemy>());
-                unitSelection.SetActive(false);
+
+                //Using an offensive item on an enemy
+                if (usingOffensiveItem) {
+                    List<Item> keys = new List<Item>(_items.Keys);
+                    keys[itemMenuPos].Use(enemies[unitSelectionPos].GetComponent<Unit>());
+                    _items[keys[itemMenuPos]] -= 1;
+                    if (_items[keys[itemMenuPos]] <= 0) {
+                        _items.Remove(keys[itemMenuPos]);
+                    }
+                    usingOffensiveItem = false;
+                    unitSelection.SetActive(false);
+                }
+
+                //Using an offensive ability on an enemy
+                else {
+                    _abilities[abilityMenuPos].Action(enemies[unitSelectionPos].GetComponent<Unit>());
+                    unitSelection.SetActive(false);
+                }
+
+            }
+            else if (unitSelectionFriendly.activeSelf) {
+                List<Item> keys = new List<Item>(_items.Keys);
+                keys[itemMenuPos].Use(characters[0].GetComponent<Unit>());
+                _items[keys[itemMenuPos]] -= 1;
+                if (_items[keys[itemMenuPos]] <= 0) {
+                    _items.Remove(keys[itemMenuPos]);
+                }
+                unitSelectionFriendly.SetActive(false);
+            }
+            else if (playerItemMenu.activeSelf) {
+                playerItemMenu.SetActive(false);
+                List<Item> keys = new List<Item>(_items.Keys);
+                if (keys[itemMenuPos].IsFriendly) {
+                    unitSelectionFriendly.SetActive(true);
+                    UpdateUnitSelectionFriendly();
+                }
+                else {
+                    usingOffensiveItem = true;
+                    unitSelection.SetActive(true);
+                    UpdateUnitSelection();
+                }
             }
         }
+
+
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (playerAbilityMenu.activeSelf) {
                 playerAbilityMenu.SetActive(false);
@@ -118,9 +197,25 @@ public class BattleManager : MonoBehaviour
             }
             else if (unitSelection.activeSelf) {
                 unitSelection.SetActive(false);
-                playerAbilityMenu.SetActive(true);
+                if (usingOffensiveItem) {
+                    usingOffensiveItem = false;
+                    playerItemMenu.SetActive(true);
+                }
+                else {
+                    playerAbilityMenu.SetActive(true);
+                }
+            }
+            else if (playerItemMenu.activeSelf) {
+                playerItemMenu.SetActive(false);
+                playerMenu.SetActive(true);
+            }
+            else if (unitSelectionFriendly.activeSelf) {
+                unitSelectionFriendly.SetActive(false);
+                playerItemMenu.SetActive(true);
             }
         }
+
+        #endregion
     }
 
     void NextTurn() {
@@ -189,6 +284,10 @@ public class BattleManager : MonoBehaviour
     void PopulateAbilityMenu(List<Ability> abilities) {
         _abilities = abilities;
         int offset = 0;
+        if (abilityTexts != null) {
+            foreach (GameObject obj in abilityTexts)
+                Destroy(obj.gameObject);
+        }
         abilityTexts = new List<GameObject>();
         foreach (Ability ability in abilities) {
             var text = Instantiate(abilityText, Vector3.zero, Quaternion.identity, playerAbilityMenu.transform);
@@ -201,21 +300,55 @@ public class BattleManager : MonoBehaviour
         }
         UpdateAbilityMenuSelection();
     }
-
-    void UpdateMenuSelection() {
-        RectTransform rect = playerMenuSelection.GetComponent<RectTransform>();
-        rect.localPosition = new Vector3(-72 + playerMenuPos * 48, rect.localPosition.y, rect.localPosition.z);
-    }
     void UpdateAbilityMenuSelection() {
         RectTransform rect = abilityMenuSelection.GetComponent<RectTransform>();
         RectTransform textRect = abilityTexts[abilityMenuPos].GetComponent<RectTransform>();
         rect.localPosition = new Vector3(textRect.localPosition.x - (textRect.sizeDelta.x / 2) - 8, textRect.localPosition.y + (textRect.sizeDelta.y / 4) + 1, 100);
         abilityDescriptionText.text = _abilities[abilityMenuPos].Description;
     }
+    void PopulateItemMenu(Dictionary<Item, int> items) {
+        itemMenuPos = 0;
+        _items = items;
+        int offset = 0;
+        if (itemTexts != null) {
+            foreach (GameObject obj in itemTexts)
+                Destroy(obj.gameObject);
+        }
+        itemTexts = new List<GameObject>();
+        foreach ( KeyValuePair<Item, int> item in items) {
+            var text = Instantiate(abilityText, Vector3.zero, Quaternion.identity, playerItemMenu.transform);
+            text.GetComponent<Text>().text = item.Key + "     " + item.Value;
+            RectTransform textRect = text.GetComponent<RectTransform>();
+            textRect.localPosition = new Vector3(-80, -110 - offset, 100);
+            offset += 20;
+            itemTexts.Add(text);
+
+        }
+        UpdateItemMenuSelection();
+    }
+    void UpdateItemMenuSelection() {
+        RectTransform rect = itemMenuSelection.GetComponent<RectTransform>();
+        RectTransform textRect = itemTexts[itemMenuPos].GetComponent<RectTransform>();
+        rect.localPosition = new Vector3(textRect.localPosition.x - (textRect.sizeDelta.x / 2) - 8, textRect.localPosition.y + (textRect.sizeDelta.y / 4) + 1, 100);
+        List<Item> keys = new List<Item>(_items.Keys);
+        itemDescriptionText.text = keys[itemMenuPos].Description;
+    }
+    
+
+    void UpdateMenuSelection() {
+        RectTransform rect = playerMenuSelection.GetComponent<RectTransform>();
+        rect.localPosition = new Vector3(-72 + playerMenuPos * 48, rect.localPosition.y, rect.localPosition.z);
+    }
+
     void UpdateUnitSelection() {
         RectTransform rect = unitSelection.GetComponent<RectTransform>();
         GameObject enemy = enemies[unitSelectionPos];
         rect.localPosition = new Vector3( enemy.transform.position.x * 32 / 2 - 64, enemy.transform.position.y * 32 / 2, 100);
+    }
+    void UpdateUnitSelectionFriendly() {
+        RectTransform rect = unitSelectionFriendly.GetComponent<RectTransform>();
+        GameObject character = characters[unitSelectionFriendlyPos];
+        rect.localPosition = new Vector3( character.transform.position.x * 32 / 2 - 32, character.transform.position.y * 32 / 2, 100);
     }
     void UnitSelectionAscend() {
         unitSelectionPos--;
@@ -242,6 +375,18 @@ public class BattleManager : MonoBehaviour
         else {
             dText.destroyed.AddListener(CheckUnitStatuses);
         }
+    }
+
+    public void Heal(Unit target, float amount) {
+        target.CurrentHealth += (int) amount;
+        if (target.CurrentHealth > target.MaxHealth)
+            target.CurrentHealth = target.MaxHealth;
+        var pos = target.gameObject.transform.position;
+        var o = Instantiate(damageText, pos + new Vector3(0.25f,target.gameObject.GetComponent<SpriteRenderer>().bounds.size.y / 2,0), Quaternion.identity);
+        var dText = o.GetComponent<DamageText>();
+        dText.SetText( (int) amount );
+        dText.SetColor(Color.green);
+        dText.destroyed.AddListener(CheckUnitStatuses);
     }
 
     private void EndEnemyTurn() {

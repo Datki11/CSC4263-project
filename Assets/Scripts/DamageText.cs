@@ -36,6 +36,9 @@ public class DamageText : MonoBehaviour
         var str = damage.ToString();
         textChild.text = str;
     }
+    public void SetColor(Color col) {
+        textChild.color = col;
+    }
 
     private void DestroySelf() {
         destroyed.Invoke();

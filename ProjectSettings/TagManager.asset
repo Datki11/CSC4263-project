@@ -8,6 +8,7 @@ TagManager:
   - EnemyUnit
   - PlayerUnit
   - EnemyEncounter
+  - dead
   layers:
   - Default
   - TransparentFX

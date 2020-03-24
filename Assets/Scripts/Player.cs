@@ -5,6 +5,8 @@ using UnityEngine;
 public class Player : Character
 {
 	#region Public Properties
+	
+	public Dictionary<Item, int> Items {get; set;}
 	public override ICharClass Class
 	{
 		get;
@@ -60,14 +62,18 @@ public class Player : Character
 	// Start is called before the first frame update
 	void Awake()
     {
-		MaxHealth = 15;
-		CurrentHealth = 15;
+		MaxHealth = 20;
+		CurrentHealth = 20;
         //For testing
 		Class = new Berserker();
 		Class.Abilities = new List<Ability>();
 		Class.Abilities.Add(new Lunge());
 		Class.Abilities.Add(new Whirlwind());
 		Class.Abilities.Add(new FocusEnergy());
+
+		Items = new Dictionary<Item, int>();
+		Items.Add(new Potion(), 3);
+		Items.Add(new Firecracker(), 2);
 		
     }
 
