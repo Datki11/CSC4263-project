@@ -57,8 +57,8 @@ public class Player : Character
 	// Start is called before the first frame update
 	void Awake()
     {
-			MaxHealth = 20;
-			CurrentHealth = 20;
+			MaxHealth = 40;
+			CurrentHealth = 40;
 			//For testing
 			Class = new Berserker();
 			Class.Abilities = new List<Ability>();
