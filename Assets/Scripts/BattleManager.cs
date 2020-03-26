@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BattleManager : MonoBehaviour
 {
@@ -43,8 +44,6 @@ public class BattleManager : MonoBehaviour
     private int turnPos = 0;
     void Awake()
     {
-        characters = new List<GameObject>(GameObject.FindGameObjectsWithTag("PlayerUnit"));
-        enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemyUnit"));
 
         //Singleton
         if (_instance != null && _instance != this)
@@ -53,6 +52,11 @@ public class BattleManager : MonoBehaviour
         } else {
             _instance = this;
         }
+    }
+
+    void Start() {
+        characters = new List<GameObject>(GameObject.FindGameObjectsWithTag("PlayerUnit"));
+        enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemyUnit"));
     }
 
     // Update is called once per frame
@@ -222,8 +226,16 @@ public class BattleManager : MonoBehaviour
         enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemyUnit"));
         unitSelectionPos = 0;
 
+        //If there are no enemies left, the battle is over and will return to the world scene
+        if (enemies.Count <= 0) {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("PlayerUnit").gameObject;
+            DontDestroyOnLoad(playerObj);
+            SceneManager.sceneLoaded += SetupWorld;
+            SceneManager.LoadScene("Level 1");
+        }
+
         //Currently, this is set up to where the max party size for the player is 1
-        if (turn == Turn.Player) {
+        else if (turn == Turn.Player) {
             turn = Turn.Enemy;
             turnPos = 0;
             DoEnemyTurn();
@@ -243,6 +255,15 @@ public class BattleManager : MonoBehaviour
     void DoEnemyTurn() {
         Enemy e = enemies[turnPos].GetComponent<Enemy>();
         e.Act();
+    }
+
+    void SetupWorld(Scene scene, LoadSceneMode mode) {
+
+        //Transfer player stats to the world scene
+        GameObject playerUnit = GameObject.FindGameObjectWithTag("PlayerUnit");
+        GameObject.FindGameObjectWithTag("Player World").GetComponent<Player>().TransferValues(playerUnit.GetComponent<Player>());
+        Destroy(playerUnit);
+
     }
 
     void UnitDeathEnd() {

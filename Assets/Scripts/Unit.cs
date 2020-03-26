@@ -20,6 +20,8 @@ public abstract class Unit : MonoBehaviour
 			_health = value;
 			if (_health < 0)
 				_health = 0;
+			if (_health > MaxHealth)
+				_health = MaxHealth;
 		}
 	}
     public abstract int Attack
@@ -53,5 +55,14 @@ public abstract class Unit : MonoBehaviour
 			killed.Invoke();
 			Destroy(gameObject);
 		}
+	}
+
+	public virtual void TransferValues(Unit unit) {
+		MaxHealth = unit.MaxHealth;
+		CurrentHealth = unit.CurrentHealth;
+		Attack = unit.Attack;
+		Defense = unit.Defense;
+		Speed = unit.Speed;
+
 	}
 }

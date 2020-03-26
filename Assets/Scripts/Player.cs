@@ -57,20 +57,26 @@ public class Player : Character
 	// Start is called before the first frame update
 	void Awake()
     {
-		MaxHealth = 20;
-		CurrentHealth = 20;
-        //For testing
-		Class = new Berserker();
-		Class.Abilities = new List<Ability>();
-		Class.Abilities.Add(new Lunge());
-		Class.Abilities.Add(new Whirlwind());
-		Class.Abilities.Add(new FocusEnergy());
+			MaxHealth = 20;
+			CurrentHealth = 20;
+			//For testing
+			Class = new Berserker();
+			Class.Abilities = new List<Ability>();
+			Class.Abilities.Add(new Lunge());
+			Class.Abilities.Add(new Whirlwind());
+			Class.Abilities.Add(new FocusEnergy());
 
-		Items = new Dictionary<Item, int>();
-		Items.Add(new Potion(), 3);
-		Items.Add(new Firecracker(), 2);
+			Items = new Dictionary<Item, int>();
+			Items.Add(new Potion(), 3);
+			Items.Add(new Firecracker(), 2);
 		
     }
+
+	public void TransferValues(Player player) {
+		TransferValues( (Unit) player);
+		Class.Abilities = player.Class.Abilities;
+		Items = player.Items;
+	}
 
     // Update is called once per frame
     void Update()
