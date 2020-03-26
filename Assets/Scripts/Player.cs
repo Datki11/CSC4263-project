@@ -17,11 +17,6 @@ public class Player : Character
 		get;
 		set;
 	}
-	public override int CurrentHealth
-	{
-		get;
-		set;
-	}
 	public override int Level
 	{
 		get;

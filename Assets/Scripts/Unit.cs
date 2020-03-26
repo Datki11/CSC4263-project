@@ -10,10 +10,17 @@ public abstract class Unit : MonoBehaviour
 		get;
 		set;
 	}
-	public abstract int CurrentHealth
+	private int _health;
+	public virtual int CurrentHealth
 	{
-		get;
-		set;
+		get {
+			return _health;
+		}
+		set {
+			_health = value;
+			if (_health < 0)
+				_health = 0;
+		}
 	}
     public abstract int Attack
 	{

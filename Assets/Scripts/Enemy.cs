@@ -15,11 +15,6 @@ public abstract class Enemy : Unit
 		get;
 		set;
 	}
-	public override int CurrentHealth
-	{
-		get;
-		set;
-	}
     public override int Attack
 	{
 		get;
