@@ -263,8 +263,14 @@ public class BattleManager : MonoBehaviour
         GameObject playerUnit = GameObject.FindGameObjectWithTag("PlayerUnit");
         GameObject.FindGameObjectWithTag("Player World").GetComponent<Player>().TransferValues(playerUnit.GetComponent<Player>());
         Destroy(playerUnit);
-        SceneManager.sceneLoaded -= SetupWorld;
+        GameObject worldData = GameObject.FindGameObjectWithTag("World Data");
+        worldData.GetComponent<WorldData>().Reload();
+        RemoveLoadingEvent();
+        
 
+    }
+    void RemoveLoadingEvent() {
+        SceneManager.sceneLoaded -= SetupWorld;
     }
 
     void UnitDeathEnd() {

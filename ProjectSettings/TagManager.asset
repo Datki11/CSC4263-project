@@ -10,6 +10,8 @@ TagManager:
   - EnemyEncounter
   - dead
   - Player World
+  - Enemy World
+  - World Data
   layers:
   - Default
   - TransparentFX

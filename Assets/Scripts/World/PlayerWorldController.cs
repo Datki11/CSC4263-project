@@ -7,7 +7,8 @@ public class PlayerWorldController : MonoBehaviour
 
     private Rigidbody2D rb;
     private float speed = 8f;
-    private float initialZ;
+    public float initialZ;
+    public GameObject worldData;
     private SpriteRenderer render;
     // Start is called before the first frame update
     void Awake()

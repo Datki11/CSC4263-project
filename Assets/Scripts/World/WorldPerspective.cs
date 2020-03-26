@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorldPerspective : MonoBehaviour
 {
-    private float initialZ;
+    public float initialZ;
     private SpriteRenderer render;
     void Awake()
     {
