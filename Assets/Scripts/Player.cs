@@ -68,7 +68,7 @@ public class Player : Character
 
 			Items = new Dictionary<Item, int>();
 			Items.Add(new Potion(), 3);
-			Items.Add(new Firecracker(), 2);
+			//Items.Add(new Firecracker(), 2);
 		
     }
 
@@ -76,6 +76,17 @@ public class Player : Character
 		TransferValues( (Unit) player);
 		Class.Abilities = player.Class.Abilities;
 		Items = player.Items;
+	}
+
+	public void AddItem (Item item) {
+		List<Item> itemKeys = new List<Item>(Items.Keys);
+		Item itemInInventory = itemKeys.Find(x => x.Name == item.Name);
+		if (itemInInventory != null) {
+			Items[itemInInventory] += 1;
+		}
+		else {
+			Items.Add(item, 1);
+		}
 	}
 
     // Update is called once per frame

@@ -12,6 +12,7 @@ TagManager:
   - Player World
   - Enemy World
   - World Data
+  - Chest
   layers:
   - Default
   - TransparentFX
