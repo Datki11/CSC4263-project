@@ -11,6 +11,13 @@ public class Berserker : ICharClass
 		get;
 		set;
     }
+
+	public override Resource Resource
+	{
+		get;
+		set;
+	}
+
 	public override int InitialHealth
     {
 		get;
@@ -58,6 +65,24 @@ public class Berserker : ICharClass
     #region Constructor
     public Berserker()
 	{
+		Abilities = new List<Ability>
+		{
+			new Lunge(),
+			new Whirlwind(),
+			new FocusEnergy()
+		};
+
+		Resource = new Rage();
+
+		// InitialHealth = ;
+		// InitialAttack = ;
+		// InitialDefense = ;
+		// InitialSpeed = ;
+
+		// HealthIncrement = ;
+		// AttackIncrement = ;
+		// DefenseIncrement = ;
+		// SpeedIncrement = ;
 	}
 	#endregion
 }

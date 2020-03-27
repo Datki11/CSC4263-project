@@ -164,7 +164,12 @@ public class BattleManager : MonoBehaviour
 
                 //Using an offensive ability on an enemy
                 else {
-                    _abilities[abilityMenuPos].Action(enemies[unitSelectionPos].GetComponent<Unit>());
+                    var ability = _abilities[abilityMenuPos];
+                    if (ability.Type == TargetType.Single)
+                        ability.Action(enemies[unitSelectionPos].GetComponent<Unit>());
+                    else if (ability.Type == TargetType.AllEnemy)
+                        foreach (GameObject enemy in enemies.ToArray())
+                            ability.Action(enemy.GetComponent<Unit>());
                     unitSelection.SetActive(false);
                 }
 

@@ -9,7 +9,7 @@ public class Bite : Ability
     public Bite() {
         Name = "Bite";
         Description = "An attack that deals physical damage";
-
+        Type = TargetType.Single;
     }
 
     // Update is called once per frame
