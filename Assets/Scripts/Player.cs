@@ -51,6 +51,8 @@ public class Player : Character
     {
 		base.LevelUp();
     }
+
+	public
 	#endregion
 
 	#region MonoBehaviour
@@ -59,12 +61,9 @@ public class Player : Character
     {
 			MaxHealth = 40;
 			CurrentHealth = 40;
+
 			//For testing
 			Class = new Berserker();
-			Class.Abilities = new List<Ability>();
-			Class.Abilities.Add(new Lunge());
-			Class.Abilities.Add(new Whirlwind());
-			Class.Abilities.Add(new FocusEnergy());
 
 			Items = new Dictionary<Item, int>();
 			Items.Add(new Potion(), 3);

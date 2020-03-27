@@ -7,6 +7,8 @@ public abstract class Ability
     public string Name {get; set;}
     public string Description {get; set;}
 
+    public TargetType Type;
+
     Character User;
     Character Target;
 

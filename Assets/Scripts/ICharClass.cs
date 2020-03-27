@@ -11,13 +11,20 @@ public abstract class ICharClass
 		get;
 		set;
     }
+
+	public abstract Resource Resource
+	{
+		get;
+		set;
+	}
+
+	//initial values for stats
 	public abstract int InitialHealth
     {
 		get;
 		set;
     }
 
-	//initial values for stats
 	public abstract int InitialAttack
 	{
 		get;

@@ -10,6 +10,12 @@ public class Magician : ICharClass
 		get;
 		set;
 	}
+
+	public override Resource Resource
+	{
+		get;
+		set;
+	}
 	public override int InitialHealth
 	{
 		get;
@@ -51,12 +57,6 @@ public class Magician : ICharClass
 	{
 		get;
 		set;
-	}
-	#endregion
-
-	#region Constructor
-	public Magician()
-	{
 	}
 	#endregion
 }
