@@ -25,6 +25,10 @@ public class Chest : MonoBehaviour
 
     public void Open() {
         Instantiate(chestItemText, transform.position, Quaternion.identity).GetComponent<ChestItemText>().SetText(itemName);
+        TurnToOpenedChest();
+        
+    }
+    public void TurnToOpenedChest() {
         Instantiate(openChest, new Vector3(transform.position.x, transform.position.y, GetComponent<WorldPerspective>().initialZ), Quaternion.identity);
         Destroy(gameObject);
     }

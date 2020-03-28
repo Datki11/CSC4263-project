@@ -11,11 +11,14 @@ public class WorldData : MonoBehaviour
         public Vector3 pos;
     }
     public List<EnemyData> enemyDatas;
+    public List<Vector2> chestIDs;
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
+
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player World");
         playerPos = new Vector3(playerObj.transform.position.x, playerObj.transform.position.y, playerObj.GetComponent<PlayerWorldController>().initialZ);
+
         List<GameObject> enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("Enemy World"));
         enemyDatas = new List<EnemyData>();
         foreach(GameObject enemy in enemies) {
@@ -23,6 +26,13 @@ public class WorldData : MonoBehaviour
             enemyData.startPos = new Vector2(enemy.GetComponent<EnemyWorld>().startPos.x, enemy.GetComponent<EnemyWorld>().startPos.y);
             enemyData.pos = new Vector3(enemy.gameObject.transform.position.x, enemy.gameObject.transform.position.y, enemy.GetComponent<WorldPerspective>().initialZ);
             enemyDatas.Add(enemyData);
+        }
+
+        List<GameObject> chests = new List<GameObject>(GameObject.FindGameObjectsWithTag("Chest"));
+        chestIDs = new List<Vector2>();
+        foreach(GameObject chest in chests) {
+            Vector2 ID = new Vector2(chest.transform.position.x, chest.transform.position.y);
+            chestIDs.Add(ID);
         }
     }
 
@@ -36,6 +46,15 @@ public class WorldData : MonoBehaviour
                 Destroy(enemy);
             else
                 enemy.transform.position = enemyData.pos;
+        }
+
+        List<GameObject> chests = new List<GameObject>(GameObject.FindGameObjectsWithTag("Chest"));
+        foreach(GameObject chest in chests) {
+            Vector2 pos = new Vector2(chest.transform.position.x, chest.transform.position.y);
+            Vector2 matchedChest = chestIDs.Find(e => e.x == pos.x && e.y == pos.y);
+            if (matchedChest == Vector2.zero) {
+                chest.GetComponent<Chest>().TurnToOpenedChest();
+            }
         }
 
         GameObject.FindGameObjectWithTag("Player World").transform.position = playerPos;
