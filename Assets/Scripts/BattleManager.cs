@@ -74,7 +74,7 @@ public class BattleManager : MonoBehaviour
                 UpdateMenuSelection();
             }
             else if (unitSelection.activeSelf) {
-                UnitSelectionAscend();
+                UnitSelectionDescend();
             }
         }
 
@@ -87,7 +87,7 @@ public class BattleManager : MonoBehaviour
                 UpdateMenuSelection();
             }
             else if (unitSelection.activeSelf) {
-                UnitSelectionDescend();
+                UnitSelectionAscend();
             }   
         }
 
@@ -100,7 +100,7 @@ public class BattleManager : MonoBehaviour
                 UpdateAbilityMenuSelection();
             }
             else if (unitSelection.activeSelf) {
-                UnitSelectionDescend();
+                UnitSelectionAscend();
             }
             else if (playerItemMenu.activeSelf) {
                 itemMenuPos++;
@@ -119,7 +119,7 @@ public class BattleManager : MonoBehaviour
                 UpdateAbilityMenuSelection();
             }
             else if (unitSelection.activeSelf) {
-                UnitSelectionAscend();
+                UnitSelectionDescend();
             }
             else if (playerItemMenu.activeSelf) {
                 itemMenuPos--;

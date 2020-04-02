@@ -8,7 +8,7 @@ public class BatEnemyWorld : EnemyWorld
     Rigidbody2D rb;
     
     //How far the enemy is allowed to move
-    private float territoryRange = 12;
+    public float territoryRange = 12;
     private bool chasingPlayer;
     private float chaseSpeed = 7;
     private float idleSpeed = 3;
