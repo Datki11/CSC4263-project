@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Resource : MonoBehaviour
+public abstract class Resource
 {
 
     public abstract int BaseMax
@@ -21,17 +21,5 @@ public abstract class Resource : MonoBehaviour
     {
         get;
         set;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

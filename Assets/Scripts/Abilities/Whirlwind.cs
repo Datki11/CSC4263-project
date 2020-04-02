@@ -8,6 +8,7 @@ public class Whirlwind : Ability
         Name = "Whirlwind";
         Description = "Attack all enemies, expend Rage, cannot attack next turns";
         Type = TargetType.AllEnemy;
+        Cost = 10;
     }
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,6 @@ public class Whirlwind : Ability
     }
 
     public override void Action(Unit target) {
-        BattleManager.Instance.InflictDamage(target, 5);
+        BattleManager.Instance.InflictDamage(target, 7);
     }
 }

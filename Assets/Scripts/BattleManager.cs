@@ -249,6 +249,8 @@ public class BattleManager : MonoBehaviour
             turnPos++;
             if (turnPos > enemies.Count - 1) {
                 turn = Turn.Player;
+                var playerResource = GameObject.FindWithTag("PlayerUnit").GetComponent<Player>().Class.Resource;
+                playerResource.Current += playerResource.BaseRestoreRate;
                 playerMenu.SetActive(true);
             }
             else {
