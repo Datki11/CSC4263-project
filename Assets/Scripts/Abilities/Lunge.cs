@@ -8,6 +8,7 @@ public class Lunge : Ability
         Name = "Lunge";
         Description = "attack first on single opponent, expend Rage";
         Type = TargetType.Single;
+        Cost = 0;
     }
     void Start()
     {

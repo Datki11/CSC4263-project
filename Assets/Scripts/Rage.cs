@@ -21,4 +21,11 @@ public class Rage : Resource
         get;
         set;
     }
+
+    public Rage()
+    {
+        BaseMax = 100;
+        Current = 0;
+        BaseRestoreRate = 10;
+    }
 }

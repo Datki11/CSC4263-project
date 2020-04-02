@@ -165,11 +165,22 @@ public class BattleManager : MonoBehaviour
                 //Using an offensive ability on an enemy
                 else {
                     var ability = _abilities[abilityMenuPos];
-                    if (ability.Type == TargetType.Single)
-                        ability.Action(enemies[unitSelectionPos].GetComponent<Unit>());
-                    else if (ability.Type == TargetType.AllEnemy)
-                        foreach (GameObject enemy in enemies.ToArray())
-                            ability.Action(enemy.GetComponent<Unit>());
+                    switch (ability.Type)
+                    {
+                        case TargetType.Single:
+                            ability.Action(enemies[unitSelectionPos].GetComponent<Unit>());
+                            break;
+
+                        case TargetType.AllEnemy:
+                            foreach (GameObject enemy in enemies.ToArray())
+                                ability.Action(enemy.GetComponent<Unit>());
+                            break;
+
+                        default:
+                            ability.Action(enemies[unitSelectionPos].GetComponent<Unit>());
+                            break;
+                    }
+
                     unitSelection.SetActive(false);
                 }
 
@@ -249,6 +260,8 @@ public class BattleManager : MonoBehaviour
             turnPos++;
             if (turnPos > enemies.Count - 1) {
                 turn = Turn.Player;
+                var playerResource = GameObject.FindWithTag("PlayerUnit").GetComponent<Player>().Class.Resource;
+                playerResource.Current += playerResource.BaseRestoreRate;
                 playerMenu.SetActive(true);
             }
             else {
@@ -337,7 +350,7 @@ public class BattleManager : MonoBehaviour
         RectTransform rect = abilityMenuSelection.GetComponent<RectTransform>();
         RectTransform textRect = abilityTexts[abilityMenuPos].GetComponent<RectTransform>();
         rect.localPosition = new Vector3(textRect.localPosition.x - (textRect.sizeDelta.x / 2) - 8, textRect.localPosition.y + (textRect.sizeDelta.y / 4) + 1, 100);
-        abilityDescriptionText.text = _abilities[abilityMenuPos].Description;
+        abilityDescriptionText.text = _abilities[abilityMenuPos].Description + "\n\nCost: " + _abilities[abilityMenuPos].Cost;
     }
     void PopulateItemMenu(Dictionary<Item, int> items) {
         itemMenuPos = 0;
