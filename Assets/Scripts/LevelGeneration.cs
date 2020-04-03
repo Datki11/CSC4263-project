@@ -9,10 +9,22 @@ public class LevelGeneration : MonoBehaviour
     public int numOfColumns = 4;
     private int numOfCells = 0;
     public int maxNumOfCells = 12;
+    private int numOfChests = 0;
+    public int maxNumOfChests = 6;
+    public int maxNumOfEnemies = 6;
+    private int numOfEnemies = 0;
+    private int numOfBatEnemies = 0;
+    private int numOfTentacleEnemies = 0;
+    private int roomsLeftToCreate;
     public GameObject grass;
     public GameObject playerPrefab;
     public GameObject roomPrefab;
     public GameObject camera;
+    public GameObject chestPrefab;
+    public GameObject treePrefab;
+    public GameObject smallRockPrefab;
+    public GameObject skullPrefab;
+    public List<GameObject> enemies;
     public Cell[,] cells;
     public enum Direction {
         North,
@@ -139,31 +151,152 @@ public class LevelGeneration : MonoBehaviour
 
     void CreateLevel(List<CellLocation> cellsInPath) {
 
+        roomsLeftToCreate = maxNumOfCells;
+
         foreach (CellLocation cellLocation in cellsInPath) {
             Cell cell = cells[cellLocation.row, cellLocation.column];
             //Instantiate(grass, new Vector3(cellLocation.column * 2, cellLocation.row * 2, 100), Quaternion.identity);
             InstantiateCell(cellLocation);
+            int numOfTreesToAdd = Mathf.RoundToInt(Random.Range(3, 12));
+            bool[,] roomSpaces = new bool[14,36];
+
+            for (int i = 0; i < numOfTreesToAdd; i++) {
+                bool foundPlace = false;
+                int treeRow = 0, treeColumn = 0;
+                while (!foundPlace) {
+                    treeRow = Mathf.RoundToInt(Random.Range(0, 13));
+                    treeColumn = Mathf.RoundToInt(Random.Range(1, 35));
+                    if (!roomSpaces[treeRow, treeColumn] && !roomSpaces[treeRow + 1, treeColumn] && !roomSpaces[treeRow, treeColumn + 1] && !roomSpaces[treeRow, treeColumn - 1]) {
+                        foundPlace = true;
+                        roomSpaces[treeRow + 1, treeColumn] = true;
+                        roomSpaces[treeRow, treeColumn] = true;
+                        roomSpaces[treeRow, treeColumn + 1] = true;
+                        roomSpaces[treeRow, treeColumn - 1] = true;
+                    }
+
+                }
+
+                Instantiate(treePrefab, new Vector3(cellLocation.column * 42 - 26 + treeColumn, -cellLocation.row * 24 - treeRow + 4, -0.002f), Quaternion.identity);
+            }
+
+
+            int numOfEnemiesToAdd = Mathf.RoundToInt(Random.Range(0,2));
+            if (cellLocation.row == 2 && cellLocation.column == 0) //Don't spawn enemies in the starting room
+                numOfEnemiesToAdd = 0;
+            //There are just enough rooms to fill in the remaining enemies, so can't have any more empty rooms
+            else if (numOfEnemiesToAdd == 0 && (maxNumOfEnemies - numOfEnemies) >= roomsLeftToCreate)
+                numOfEnemiesToAdd = 1;
+
+            for (int i = 0; i < numOfEnemiesToAdd; i++) {
+                bool foundPlace = false;
+                int enemyRow = 0, enemyColumn = 0;
+                while (!foundPlace) {
+                    enemyRow = Mathf.RoundToInt(Random.Range(6, 8));
+                    enemyColumn = Mathf.RoundToInt(Random.Range(12, 24));
+                    if (!roomSpaces[enemyRow, enemyColumn]) {
+                        foundPlace = true;
+                        roomSpaces[enemyRow, enemyColumn] = true;
+                    }
+                }
+
+                int indexOfEnemyToSpawn = Mathf.RoundToInt(Random.Range(0, enemies.Count));
+                //Making sure there's a good distribution
+                if (indexOfEnemyToSpawn == 0 && numOfBatEnemies >= 3)
+                    indexOfEnemyToSpawn = 1;
+                if (indexOfEnemyToSpawn == 1 && numOfTentacleEnemies >= 3)
+                    indexOfEnemyToSpawn = 0;
+                
+                Instantiate(enemies[indexOfEnemyToSpawn], new Vector3(cellLocation.column * 42 - 26 + enemyColumn, -cellLocation.row * 24 - enemyRow + 4, -0.0018f), Quaternion.identity);
+                numOfEnemies++;
+                if (indexOfEnemyToSpawn == 0)
+                    numOfBatEnemies++;
+                else
+                    numOfTentacleEnemies++;
+            }
+
+            int numOfChestsToAdd = Mathf.RoundToInt(Random.Range(0, 2));
+            if (cellLocation.row == 2 && cellLocation.column == 0)
+                numOfChestsToAdd = 0;
+            if ( (maxNumOfChests - numOfChests) >= roomsLeftToCreate)
+                numOfChestsToAdd = 1;
+            for (int i = 0; i < numOfChestsToAdd; i++) {
+                bool foundPlace = false;
+                int chestRow = 0, chestColumn = 0;
+                while (!foundPlace) {
+                    chestRow = Mathf.RoundToInt(Random.Range(4, 9));
+                    chestColumn = Mathf.RoundToInt(Random.Range(9, 27));
+                    if (!roomSpaces[chestRow, chestColumn]) {
+                        foundPlace = true;
+                        roomSpaces[chestRow, chestColumn] = true;
+                    }
+
+                }
+
+            GameObject chest = Instantiate(chestPrefab, new Vector3(cellLocation.column * 42 - 26 + chestColumn, -cellLocation.row * 24 - chestRow + 4, 0f), Quaternion.identity);
+            chest.GetComponent<Chest>().itemName = RandomItem();
+            }
+
+            int numOfRocksToAdd = Mathf.RoundToInt(Random.Range(0, 6));
+            for (int i = 0; i < numOfRocksToAdd; i++) {
+                bool foundPlace = false;
+                int rockRow = 0, rockColumn = 0;
+                while (!foundPlace) {
+                    rockRow = Mathf.RoundToInt(Random.Range(2, 11));
+                    rockColumn = Mathf.RoundToInt(Random.Range(3, 33));
+                    if (!roomSpaces[rockRow, rockColumn] && !roomSpaces[rockRow + 1, rockColumn] && !roomSpaces[rockRow, rockColumn + 1] && !roomSpaces[rockRow + 1, rockColumn + 1]) {
+                        foundPlace = true;
+                        roomSpaces[rockRow, rockColumn] = true;
+                        roomSpaces[rockRow + 1, rockColumn] = true;
+                        roomSpaces[rockRow , rockColumn + 1] = true;
+                        roomSpaces[rockRow + 1, rockColumn + 1] = true;
+                    }
+
+                }
+
+                Instantiate(smallRockPrefab, new Vector3(cellLocation.column * 42 - 26 + rockColumn, -cellLocation.row * 24 - rockRow + 4, -0.001f), Quaternion.identity);
+            }
+
+            int numOfSkullsToAdd = Mathf.RoundToInt(Random.Range(0, 3));
+            for (int i = 0; i < numOfSkullsToAdd; i++) {
+                bool foundPlace = false;
+                int rockRow = 0, rockColumn = 0;
+                while (!foundPlace) {
+                    rockRow = Mathf.RoundToInt(Random.Range(2, 11));
+                    rockColumn = Mathf.RoundToInt(Random.Range(3, 33));
+                    if (!roomSpaces[rockRow, rockColumn] && !roomSpaces[rockRow + 1, rockColumn] && !roomSpaces[rockRow, rockColumn + 1] && !roomSpaces[rockRow + 1, rockColumn + 1]) {
+                        foundPlace = true;
+                        roomSpaces[rockRow, rockColumn] = true;
+                        roomSpaces[rockRow + 1, rockColumn] = true;
+                        roomSpaces[rockRow , rockColumn + 1] = true;
+                        roomSpaces[rockRow + 1, rockColumn + 1] = true;
+                    }
+
+                }
+
+                Instantiate(skullPrefab, new Vector3(cellLocation.column * 42 - 26 + rockColumn, -cellLocation.row * 24 - rockRow + 4, 100f), Quaternion.identity);
+            }
         }
 
-        Instantiate(playerPrefab, new Vector2(0, -2 * 24 - 10), Quaternion.identity);
+        Instantiate(playerPrefab, new Vector3(-25, -2 * 24 - 6, 0.0001f), Quaternion.identity);
         camera.GetComponent<CameraBehavior>().SetActive();
     }
 
     void InstantiateCell(CellLocation cellLocation) {
         GameObject newRoom = Instantiate(roomPrefab, new Vector3(cellLocation.column * 42, -cellLocation.row * 24, 0), Quaternion.identity);
         Cell cell = cells[cellLocation.row, cellLocation.column];
-        if (cell.openings.Contains(Direction.North)) {
-            Destroy(newRoom.transform.GetChild(0).transform.GetChild(5).gameObject);
+        foreach(Direction dir in cell.openings) {
+            Destroy(newRoom.transform.GetChild((int) dir).transform.GetChild(5).gameObject);
+            Destroy(newRoom.transform.GetChild((int) dir).transform.GetChild(6).gameObject);
         }
-        if (cell.openings.Contains(Direction.East)) {
-            Destroy(newRoom.transform.GetChild(1).transform.GetChild(5).gameObject);
-        }
-        if (cell.openings.Contains(Direction.South)) {
-            Destroy(newRoom.transform.GetChild(2).transform.GetChild(5).gameObject);
-        }
-        if (cell.openings.Contains(Direction.West)) {
-            Destroy(newRoom.transform.GetChild(3).transform.GetChild(5).gameObject);
-        }
+        roomsLeftToCreate--;
+
+    }
+
+    string RandomItem() {
+        if (Mathf.RoundToInt(Random.Range(0,2)) == 0)
+            return "Potion";
+        else
+            return "Firecracker";
 
     }
 

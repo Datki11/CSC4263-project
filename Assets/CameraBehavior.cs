@@ -28,7 +28,7 @@ public class CameraBehavior : MonoBehaviour
                 column = 0;
 
             row = (int) (player.transform.position.y - 9) / 24;
-            transform.position = new Vector3(-7 + column * 42, -3 + row * 24, -20);
+            transform.position = new Vector3(-7 + column * 42, -2.6f + row * 24, -20);
         }
         
     }

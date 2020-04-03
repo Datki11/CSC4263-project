@@ -8,7 +8,7 @@ public class BatEnemyWorld : EnemyWorld
     Rigidbody2D rb;
     
     //How far the enemy is allowed to move
-    public float territoryRange = 12;
+    public float territoryRange = 22;
     private bool chasingPlayer;
     private float chaseSpeed = 7;
     private float idleSpeed = 3;
@@ -16,20 +16,22 @@ public class BatEnemyWorld : EnemyWorld
     private Vector2 idlePoint;
     private Vector2 direction;
     private GameObject player;
+    
     public override void Awake()
     {
         base.Awake();
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player World");
+        
         
     }
 
     public void Start() {
         Invoke("SetNewIdlePoint", Random.Range(0.2f,0.5f));
+        player = GameObject.FindGameObjectWithTag("Player World");
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         base.Update();
         if (!chasingPlayer) {
@@ -44,7 +46,7 @@ public class BatEnemyWorld : EnemyWorld
             }
 
             Vector2 playerPos = new Vector2(player.transform.position.x, player.transform.position.y);
-            if ( (playerPos - new Vector2(transform.position.x, transform.position.y)).magnitude < 8) {
+            if ( (playerPos - new Vector2(transform.position.x, transform.position.y)).magnitude < 12) {
                 if (IsPlayerInTerritory()) {
                     chasingPlayer = true;
                     isIdlePointSet = false;
@@ -54,7 +56,7 @@ public class BatEnemyWorld : EnemyWorld
         else {
             Vector2 playerPos = new Vector2(player.transform.position.x, player.transform.position.y);
             MoveTowardsPoint(playerPos, chaseSpeed);
-            if ( (new Vector2(transform.position.x, transform.position.y) - playerPos).magnitude > 12 || !IsPlayerInTerritory()) {
+            if ( (new Vector2(transform.position.x, transform.position.y) - playerPos).magnitude > 18 || !IsPlayerInTerritory()) {
                 rb.velocity = Vector2.zero;
                 chasingPlayer = false;
                 Invoke("SetNewIdlePoint", Random.Range(1f,1.5f));

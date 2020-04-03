@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 237636358}
   - component: {fileID: 237636357}
   - component: {fileID: 237636360}
+  - component: {fileID: 237636361}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -218,6 +219,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TexturePixelsPerWorldUnit: 16
+--- !u!114 &237636361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237636356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cf6ebc8ff2e34f9bb6f4377d8c4de2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1203052334
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,7 +242,7 @@ GameObject:
   - component: {fileID: 1203052336}
   - component: {fileID: 1203052335}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Level Generator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -250,9 +263,15 @@ MonoBehaviour:
   numOfRows: 4
   numOfColumns: 4
   maxNumOfCells: 12
+  maxNumOfChests: 6
+  maxNumOfEnemies: 6
   grass: {fileID: 2277034549323488440, guid: e197964b671e04d4a87f0c5dd83cc76a, type: 3}
-  playerPrefab: {fileID: 0}
+  playerPrefab: {fileID: 4869541032881966215, guid: 59878b58a3bba469f85457644078bd14,
+    type: 3}
   roomPrefab: {fileID: 7296972408183265090, guid: 23e61d7b4efed4d51bb9b0c617e55407,
+    type: 3}
+  camera: {fileID: 237636356}
+  treePrefab: {fileID: 9174584465187152151, guid: 57fd92337ac31489785c69ce138e52fc,
     type: 3}
 --- !u!4 &1203052336
 Transform:

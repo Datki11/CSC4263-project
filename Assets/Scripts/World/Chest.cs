@@ -10,7 +10,7 @@ public class Chest : MonoBehaviour
     public string itemName;
     public Item item;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         //Lord forgive me
         if (itemName == "Potion")
