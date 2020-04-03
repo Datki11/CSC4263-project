@@ -146,9 +146,17 @@ public class BattleManager : MonoBehaviour
                 }
             }
             else if (playerAbilityMenu.activeSelf) {
-                playerAbilityMenu.SetActive(false);
-                unitSelection.SetActive(true);
-                UpdateUnitSelection();
+                //If the player selected an ability that attacks all enemies, don't do unit selection
+                Ability ability = _abilities[abilityMenuPos];
+                if (ability.Type == TargetType.AllEnemy) {
+                    playerAbilityMenu.SetActive(false);
+                    ability.Action(null);
+                }
+                else {
+                    playerAbilityMenu.SetActive(false);
+                    unitSelection.SetActive(true);
+                    UpdateUnitSelection();
+                }
             }
             else if (unitSelection.activeSelf) {
 
@@ -197,16 +205,19 @@ public class BattleManager : MonoBehaviour
                 unitSelectionFriendly.SetActive(false);
             }
             else if (playerItemMenu.activeSelf) {
-                playerItemMenu.SetActive(false);
-                List<Item> keys = new List<Item>(_items.Keys);
-                if (keys[itemMenuPos].IsFriendly) {
-                    unitSelectionFriendly.SetActive(true);
-                    UpdateUnitSelectionFriendly();
-                }
-                else {
-                    usingOffensiveItem = true;
-                    unitSelection.SetActive(true);
-                    UpdateUnitSelection();
+                //Make sure the player actually has any items
+                if (_items.Keys.Count > 0) {
+                    playerItemMenu.SetActive(false);
+                    List<Item> keys = new List<Item>(_items.Keys);
+                    if (keys[itemMenuPos].IsFriendly) {
+                        unitSelectionFriendly.SetActive(true);
+                        UpdateUnitSelectionFriendly();
+                    }
+                    else {
+                        usingOffensiveItem = true;
+                        unitSelection.SetActive(true);
+                        UpdateUnitSelection();
+                    }
                 }
             }
         }
@@ -362,14 +373,16 @@ public class BattleManager : MonoBehaviour
             foreach (GameObject obj in itemTexts)
                 Destroy(obj.gameObject);
         }
-        itemTexts = new List<GameObject>();
-        foreach ( KeyValuePair<Item, int> item in items) {
-            var text = Instantiate(abilityText, Vector3.zero, Quaternion.identity, playerItemMenu.transform);
-            text.GetComponent<Text>().text = item.Key + "     " + item.Value;
-            RectTransform textRect = text.GetComponent<RectTransform>();
-            textRect.localPosition = new Vector3(-80, -110 - offset, 100);
-            offset += 20;
-            itemTexts.Add(text);
+        if (_items.Keys.Count > 0) {
+            itemTexts = new List<GameObject>();
+            foreach ( KeyValuePair<Item, int> item in items) {
+                var text = Instantiate(abilityText, Vector3.zero, Quaternion.identity, playerItemMenu.transform);
+                text.GetComponent<Text>().text = item.Key + "     " + item.Value;
+                RectTransform textRect = text.GetComponent<RectTransform>();
+                textRect.localPosition = new Vector3(-80, -110 - offset, 100);
+                offset += 20;
+                itemTexts.Add(text);
+            }
 
         }
         UpdateItemMenuSelection();
@@ -422,6 +435,25 @@ public class BattleManager : MonoBehaviour
         }
         else {
             dText.destroyed.AddListener(CheckUnitStatuses);
+        }
+    }
+
+    public void InflictDamageToAllUnits(UnitType unitType, float damage) {
+        if (unitType == UnitType.Enemy) {
+            bool eventSet = false;
+            foreach(GameObject enemy in enemies) {
+
+                Unit target = (Unit) enemy.GetComponent<Enemy>();
+
+                target.CurrentHealth -= (int) damage;
+                var pos = target.gameObject.transform.position;
+                var o = Instantiate(damageText, pos + new Vector3(0.25f,target.gameObject.GetComponent<SpriteRenderer>().bounds.size.y / 2,0), Quaternion.identity);
+                var dText = o.GetComponent<DamageText>();
+                dText.SetText( (int) damage );
+                if (!eventSet)
+                    dText.destroyed.AddListener(CheckUnitStatuses);
+                eventSet = true;
+            }
         }
     }
     

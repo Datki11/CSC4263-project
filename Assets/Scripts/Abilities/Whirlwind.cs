@@ -6,7 +6,7 @@ public class Whirlwind : Ability
 {
     public Whirlwind() {
         Name = "Whirlwind";
-        Description = "Attack all enemies, expend Rage, cannot attack next turns";
+        Description = "Attack all enemies by using rage";
         Type = TargetType.AllEnemy;
         Cost = 10;
     }
@@ -23,6 +23,6 @@ public class Whirlwind : Ability
     }
 
     public override void Action(Unit target) {
-        BattleManager.Instance.InflictDamage(target, 7);
+        BattleManager.Instance.InflictDamageToAllUnits(UnitType.Enemy, Mathf.RoundToInt(Random.Range(6,11));
     }
 }
