@@ -24,7 +24,7 @@ public class WorldData : MonoBehaviour
         foreach(GameObject enemy in enemies) {
             EnemyData enemyData = new EnemyData();
             enemyData.startPos = new Vector2(enemy.GetComponent<EnemyWorld>().startPos.x, enemy.GetComponent<EnemyWorld>().startPos.y);
-            enemyData.pos = new Vector3(enemy.gameObject.transform.position.x, enemy.gameObject.transform.position.y, enemy.GetComponent<WorldPerspective>().initialZ);
+            enemyData.pos = new Vector3(enemy.gameObject.transform.position.x, enemy.gameObject.transform.position.y, enemy.GetComponent<EnemyWorld>().initialZ);
             enemyDatas.Add(enemyData);
         }
 

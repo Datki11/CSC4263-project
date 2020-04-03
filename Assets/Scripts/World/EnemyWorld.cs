@@ -6,12 +6,16 @@ using UnityEngine.SceneManagement;
 public abstract class EnemyWorld : MonoBehaviour
 {
     public List<GameObject> encounters;
+    public float initialZ;
     public Vector2 startPos;
     // Start is called before the first frame update
     private GameObject playerWorld;
+    private SpriteRenderer render;
 
     public virtual void Awake() {
+        initialZ = transform.position.z;
         startPos = new Vector2(transform.position.x, transform.position.y);
+        render = GetComponent<SpriteRenderer>();
     }
     void OnTriggerEnter2D(Collider2D collider) {
         if (collider.gameObject.tag == "Player World") {
@@ -35,5 +39,9 @@ public abstract class EnemyWorld : MonoBehaviour
     }
     void RemoveLoadingEvent() {
         SceneManager.sceneLoaded -= SetupBattle;
+    }
+
+    public void Update() {
+        transform.position = new Vector3(transform.position.x, transform.position.y, initialZ + (render.bounds.size.y / 2 + transform.position.y) / 1000 );
     }
 }

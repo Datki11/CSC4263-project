@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2277034549323488422}
   - component: {fileID: 2277034549323488423}
-  - component: {fileID: 2277034549323488421}
+  - component: {fileID: -7156755319977693813}
   m_Layer: 0
   m_Name: Grass
   m_TagString: Untagged
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -3627264120405484348, guid: b8598ddfbf615724787329387984c2e9,
+  m_Sprite: {fileID: -6701596439569825802, guid: 04c7c8cc865d9434491dbf054efe6de9,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2277034549323488421
+--- !u!114 &-7156755319977693813
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,6 +92,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2277034549323488440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 795abafc7a5014508993655ba73ba68b, type: 3}
+  m_Script: {fileID: 11500000, guid: bb0c23c734f8a470d8de8436ff6ed550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: -6701596439569825802, guid: 04c7c8cc865d9434491dbf054efe6de9, type: 3}
+  - {fileID: 4999597204712203498, guid: 04c7c8cc865d9434491dbf054efe6de9, type: 3}
+  - {fileID: 1377675252477416570, guid: 04c7c8cc865d9434491dbf054efe6de9, type: 3}

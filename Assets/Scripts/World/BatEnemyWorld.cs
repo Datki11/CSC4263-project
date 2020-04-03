@@ -31,6 +31,7 @@ public class BatEnemyWorld : EnemyWorld
     // Update is called once per frame
     void Update()
     {
+        base.Update();
         if (!chasingPlayer) {
             if (isIdlePointSet) {
                 Vector2 oldDirection = direction;

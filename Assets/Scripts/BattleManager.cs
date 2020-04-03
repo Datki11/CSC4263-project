@@ -422,7 +422,7 @@ public class BattleManager : MonoBehaviour
             dText.destroyed.AddListener(CheckUnitStatuses);
         }
     }
-
+    
     public void Heal(Unit target, float amount) {
         target.CurrentHealth += (int) amount;
         if (target.CurrentHealth > target.MaxHealth)
