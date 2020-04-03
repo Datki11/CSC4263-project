@@ -18,8 +18,11 @@ public abstract class EnemyWorld : MonoBehaviour
         startPos = new Vector2(transform.position.x, transform.position.y);
         render = GetComponent<SpriteRenderer>();
     }
+    private bool hasCollided = false;
     void OnTriggerEnter2D(Collider2D collider) {
-        if (collider.gameObject.tag == "Player World") {
+        if (collider.gameObject.tag == "Player World" && !hasCollided) {
+            hasCollided = true;
+            
             this.gameObject.tag = "dead";
             playerWorld = GameObject.FindGameObjectWithTag("Player World");
             world = GameObject.FindGameObjectWithTag("World");
@@ -34,11 +37,12 @@ public abstract class EnemyWorld : MonoBehaviour
     
     void SetupBattle(Scene scene, LoadSceneMode mode) {
         //Randomly selects an encounter from the encounters list
-        int index = Mathf.RoundToInt(Random.Range(0, encounters.Count - 1));
-        Instantiate(encounters[index]);
+        
         BattleManager.Instance.world = world;
         GameObject.FindGameObjectWithTag("PlayerUnit").GetComponent<Player>().TransferValues(playerWorld.GetComponent<Player>());
         world.SetActive(false);
+        int index = Mathf.RoundToInt(Random.Range(0, encounters.Count - 1));
+        Instantiate(encounters[index]);
         Destroy(gameObject);
         RemoveLoadingEvent();
     }

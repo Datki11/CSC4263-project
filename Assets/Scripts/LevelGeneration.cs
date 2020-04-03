@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class LevelGeneration : MonoBehaviour
 {
-    public int numOfBattlesFought = 0;
-
     public int numOfRows= 4;
     public int numOfColumns = 4;
     private int numOfCells = 0;
@@ -204,7 +202,7 @@ public class LevelGeneration : MonoBehaviour
                 //Making sure there's a good distribution
                 if (indexOfEnemyToSpawn == 0 && numOfBatEnemies >= 3)
                     indexOfEnemyToSpawn = 1;
-                if (indexOfEnemyToSpawn == 1 && numOfTentacleEnemies >= 3)
+                if (indexOfEnemyToSpawn == 1 && numOfTentacleEnemies >= 4)
                     indexOfEnemyToSpawn = 0;
                 
                 Instantiate(enemies[indexOfEnemyToSpawn], new Vector3(cellLocation.column * 42 - 26 + enemyColumn, -cellLocation.row * 24 - enemyRow + 4, -0.0018f), Quaternion.identity, transform);

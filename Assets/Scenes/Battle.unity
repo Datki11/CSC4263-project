@@ -1067,8 +1067,9 @@ GameObject:
   - component: {fileID: 734067769}
   - component: {fileID: 734067768}
   - component: {fileID: 734067770}
+  - component: {fileID: 734067771}
   m_Layer: 0
-  m_Name: knight
+  m_Name: Player Unit
   m_TagString: PlayerUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1113,12 +1114,13 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6e1c948dc2d60d64f9be711fd674cd78, type: 3}
+  m_Sprite: {fileID: 2608725195098594141, guid: 6c21fa97e0c4947d284b7704bdf85f05,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 32, y: 32}
+  m_Size: {x: 15.096, y: 5.496}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1155,6 +1157,25 @@ MonoBehaviour:
   killed:
     m_PersistentCalls:
       m_Calls: []
+--- !u!95 &734067771
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734067767}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 047fc0fe49557470b826e23dd448834b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &765488037
 GameObject:
   m_ObjectHideFlags: 0
@@ -1779,7 +1800,7 @@ PrefabInstance:
     - target: {fileID: 5508097722262591550, guid: b937648ad250d4f7ba0ad955a231d646,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.3
+      value: 3.05
       objectReference: {fileID: 0}
     - target: {fileID: 5508097722262591550, guid: b937648ad250d4f7ba0ad955a231d646,
         type: 3}
@@ -2330,6 +2351,7 @@ MonoBehaviour:
   itemDescriptionText: {fileID: 71690508}
   gameOverScreen: {fileID: 8471801667621530862, guid: 936e23c980ab74af9a71293e92be45a9,
     type: 3}
+  world: {fileID: 0}
 --- !u!1 &1874148636
 GameObject:
   m_ObjectHideFlags: 0
@@ -2494,7 +2516,7 @@ PrefabInstance:
     - target: {fileID: 5508097722262591550, guid: b937648ad250d4f7ba0ad955a231d646,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2
+      value: 3.75
       objectReference: {fileID: 0}
     - target: {fileID: 5508097722262591550, guid: b937648ad250d4f7ba0ad955a231d646,
         type: 3}

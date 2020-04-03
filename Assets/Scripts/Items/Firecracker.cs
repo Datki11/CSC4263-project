@@ -7,13 +7,13 @@ public class Firecracker : Item
     public Firecracker() {
 
         Name = "Firecracker";
-        Description = "Deals 15 damage";
+        Description = "Deals 25 damage";
         OnlyInBattle = true;
         IsFriendly = false;
 
     }
 
     public override void Use(Unit target) {
-        BattleManager.Instance.InflictDamage(target, 15);
+        BattleManager.Instance.InflictDamage(target, 25);
     }
 }

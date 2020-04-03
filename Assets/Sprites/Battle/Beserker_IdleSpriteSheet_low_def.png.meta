@@ -1,19 +1,25 @@
 fileFormatVersion: 2
-guid: 6c21fa97e0c4947d284b7704bdf85f05
+guid: 78f02979a6c1e4d5f90a56c3e5066087
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2608725195098594141
-    second: Beserker_IdleSpriteSheet_0
+      213: 1391981595777769666
+    second: Beserker_IdleSpriteSheet_low_def_0
   - first:
-      213: 6079210468982297277
-    second: Beserker_IdleSpriteSheet_1
+      213: 1907965064305562700
+    second: Beserker_IdleSpriteSheet_low_def_1
   - first:
-      213: 3401772223962412072
-    second: Beserker_IdleSpriteSheet_2
+      213: -318727857906483982
+    second: Beserker_IdleSpriteSheet_low_def_2
   - first:
-      213: -2315831932750556872
-    second: Beserker_IdleSpriteSheet_3
+      213: -6438274710596360245
+    second: Beserker_IdleSpriteSheet_low_def_3
+  - first:
+      213: -1810439765735935581
+    second: Beserker_IdleSpriteSheet_low_def_0
+  - first:
+      213: -4901191705566854859
+    second: Beserker_IdleSpriteSheet_low_def_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -57,7 +63,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 125
+  spritePixelsToUnits: 250
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -98,7 +104,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Beserker_IdleSpriteSheet_0
+      name: Beserker_IdleSpriteSheet_low_def_0
       rect:
         serializedVersion: 2
         x: 0
@@ -112,14 +118,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5b967a4ebd043420800000000000000
-      internalID: 2608725195098594141
+      spriteID: 3a1711c00a600e6e0800000000000000
+      internalID: -1810439765735935581
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Beserker_IdleSpriteSheet_1
+      name: Beserker_IdleSpriteSheet_low_def_1
       rect:
         serializedVersion: 2
         x: 53
@@ -133,14 +139,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db2968666b1bd5450800000000000000
-      internalID: 6079210468982297277
+      spriteID: 531c8958c187bfbb0800000000000000
+      internalID: -4901191705566854859
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Beserker_IdleSpriteSheet_2
+      name: Beserker_IdleSpriteSheet_low_def_2
       rect:
         serializedVersion: 2
         x: 629
@@ -154,14 +160,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 824f11870d5853f20800000000000000
-      internalID: 3401772223962412072
+      spriteID: 2fc7671b3b6a39bf0800000000000000
+      internalID: -318727857906483982
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Beserker_IdleSpriteSheet_3
+      name: Beserker_IdleSpriteSheet_low_def_3
       rect:
         serializedVersion: 2
         x: 1248
@@ -175,8 +181,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 83195e080238cdfd0800000000000000
-      internalID: -2315831932750556872
+      spriteID: bc7e58c1347a6a6a0800000000000000
+      internalID: -6438274710596360245
       vertices: []
       indices: 
       edges: []

@@ -59,7 +59,6 @@ public class Player : Character
 	// Start is called before the first frame update
 	void Awake()
     {
-			Debug.Log("Awaked");
 			MaxHealth = 40;
 			CurrentHealth = 40;
 
@@ -73,7 +72,6 @@ public class Player : Character
     }
 
 	public void TransferValues(Player player) {
-		Debug.Log("Transferred");
 		TransferValues( (Unit) player);
 		CurrentHealth = player.CurrentHealth;
 		Class.Abilities = player.Class.Abilities;
