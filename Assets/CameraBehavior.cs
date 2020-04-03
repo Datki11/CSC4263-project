@@ -36,5 +36,15 @@ public class CameraBehavior : MonoBehaviour
     public void SetActive() {
         active = true;
         player = GameObject.FindGameObjectWithTag("Player World");
+        if (player == null)
+            active = false;
+    }
+
+    public void SetPlayer(GameObject player) {
+        active = true;
+        player = GameObject.FindGameObjectWithTag("Player World");
+        if (player == null)
+            active = false;
+
     }
 }

@@ -100,7 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   encounters:
   - {fileID: 8337297724377470318, guid: ac9dc22fe91f245efa1e128d0af947a6, type: 3}
-  - {fileID: 2555805356817724984, guid: 5f675f1ced1dd44f19c1aec13d574292, type: 3}
   initialZ: 0
   startPos: {x: 0, y: 0}
   territoryRange: 22

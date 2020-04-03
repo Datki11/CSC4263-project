@@ -32,6 +32,8 @@ public class BattleManager : MonoBehaviour
     private List<GameObject> abilityTexts;
     private List<GameObject> itemTexts;
 
+    public GameObject world;
+
     private static BattleManager _instance;
 
     public static BattleManager Instance { get { return _instance; } }
@@ -247,7 +249,7 @@ public class BattleManager : MonoBehaviour
             GameObject playerObj = GameObject.FindGameObjectWithTag("PlayerUnit").gameObject;
             DontDestroyOnLoad(playerObj);
             SceneManager.sceneLoaded += SetupWorld;
-            SceneManager.LoadScene("Level 1");
+            SceneManager.LoadScene("Empty Scene");
         }
 
         //Currently, this is set up to where the max party size for the player is 1
@@ -278,12 +280,12 @@ public class BattleManager : MonoBehaviour
     void SetupWorld(Scene scene, LoadSceneMode mode) {
 
         //Transfer player stats to the world scene
+        world.SetActive(true);
         GameObject playerUnit = GameObject.FindGameObjectWithTag("PlayerUnit");
         GameObject.FindGameObjectWithTag("Player World").GetComponent<Player>().TransferValues(playerUnit.GetComponent<Player>());
+        GameObject.FindGameObjectWithTag("Player World").GetComponent<Player>().CurrentHealth = playerUnit.GetComponent<Player>().CurrentHealth;
         Destroy(playerUnit);
-        GameObject worldData = GameObject.FindGameObjectWithTag("World Data");
-        worldData.GetComponent<WorldData>().Reload();
-        RemoveLoadingEvent();
+        SceneManager.sceneLoaded -= SetupWorld;
         
 
     }

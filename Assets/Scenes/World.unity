@@ -242,8 +242,8 @@ GameObject:
   - component: {fileID: 1203052336}
   - component: {fileID: 1203052335}
   m_Layer: 0
-  m_Name: Level Generator
-  m_TagString: Untagged
+  m_Name: World
+  m_TagString: World
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -271,8 +271,17 @@ MonoBehaviour:
   roomPrefab: {fileID: 7296972408183265090, guid: 23e61d7b4efed4d51bb9b0c617e55407,
     type: 3}
   camera: {fileID: 237636356}
+  chestPrefab: {fileID: 3795805086923417063, guid: 1e0196276660249feac23a288ad37de0,
+    type: 3}
   treePrefab: {fileID: 9174584465187152151, guid: 57fd92337ac31489785c69ce138e52fc,
     type: 3}
+  smallRockPrefab: {fileID: 3955529481337360731, guid: 81841a01d2a474fb8adba9d96cb8279f,
+    type: 3}
+  skullPrefab: {fileID: 2122025514975614444, guid: 22e2c3145813f4df4a9f99c1b4723923,
+    type: 3}
+  enemies:
+  - {fileID: 615613206895032766, guid: 6717357686f7c46f286cc84ec600dd65, type: 3}
+  - {fileID: 3188355035353481452, guid: 961e5acb8f97048789abb352f20292c1, type: 3}
 --- !u!4 &1203052336
 Transform:
   m_ObjectHideFlags: 0

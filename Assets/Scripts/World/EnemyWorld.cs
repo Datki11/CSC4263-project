@@ -10,6 +10,7 @@ public abstract class EnemyWorld : MonoBehaviour
     public Vector2 startPos;
     // Start is called before the first frame update
     private GameObject playerWorld;
+    private GameObject world;
     private SpriteRenderer render;
 
     public virtual void Awake() {
@@ -21,7 +22,9 @@ public abstract class EnemyWorld : MonoBehaviour
         if (collider.gameObject.tag == "Player World") {
             this.gameObject.tag = "dead";
             playerWorld = GameObject.FindGameObjectWithTag("Player World");
+            world = GameObject.FindGameObjectWithTag("World");
             DontDestroyOnLoad(playerWorld);
+            DontDestroyOnLoad(world);
             Instantiate(playerWorld.GetComponent<PlayerWorldController>().worldData);
             SceneManager.sceneLoaded += SetupBattle;
             SceneManager.LoadScene("Battle");
@@ -33,8 +36,10 @@ public abstract class EnemyWorld : MonoBehaviour
         //Randomly selects an encounter from the encounters list
         int index = Mathf.RoundToInt(Random.Range(0, encounters.Count - 1));
         Instantiate(encounters[index]);
+        BattleManager.Instance.world = world;
         GameObject.FindGameObjectWithTag("PlayerUnit").GetComponent<Player>().TransferValues(playerWorld.GetComponent<Player>());
-        Destroy(playerWorld);
+        world.SetActive(false);
+        Destroy(gameObject);
         RemoveLoadingEvent();
     }
     void RemoveLoadingEvent() {

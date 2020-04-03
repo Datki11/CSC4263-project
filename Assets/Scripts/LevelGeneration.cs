@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LevelGeneration : MonoBehaviour
 {
+    public int numOfBattlesFought = 0;
 
     public int numOfRows= 4;
     public int numOfColumns = 4;
@@ -176,7 +177,7 @@ public class LevelGeneration : MonoBehaviour
 
                 }
 
-                Instantiate(treePrefab, new Vector3(cellLocation.column * 42 - 26 + treeColumn, -cellLocation.row * 24 - treeRow + 4, -0.002f), Quaternion.identity);
+                Instantiate(treePrefab, new Vector3(cellLocation.column * 42 - 26 + treeColumn, -cellLocation.row * 24 - treeRow + 4, -0.002f), Quaternion.identity, transform);
             }
 
 
@@ -206,7 +207,7 @@ public class LevelGeneration : MonoBehaviour
                 if (indexOfEnemyToSpawn == 1 && numOfTentacleEnemies >= 3)
                     indexOfEnemyToSpawn = 0;
                 
-                Instantiate(enemies[indexOfEnemyToSpawn], new Vector3(cellLocation.column * 42 - 26 + enemyColumn, -cellLocation.row * 24 - enemyRow + 4, -0.0018f), Quaternion.identity);
+                Instantiate(enemies[indexOfEnemyToSpawn], new Vector3(cellLocation.column * 42 - 26 + enemyColumn, -cellLocation.row * 24 - enemyRow + 4, -0.0018f), Quaternion.identity, transform);
                 numOfEnemies++;
                 if (indexOfEnemyToSpawn == 0)
                     numOfBatEnemies++;
@@ -232,7 +233,7 @@ public class LevelGeneration : MonoBehaviour
 
                 }
 
-            GameObject chest = Instantiate(chestPrefab, new Vector3(cellLocation.column * 42 - 26 + chestColumn, -cellLocation.row * 24 - chestRow + 4, 0f), Quaternion.identity);
+            GameObject chest = Instantiate(chestPrefab, new Vector3(cellLocation.column * 42 - 26 + chestColumn, -cellLocation.row * 24 - chestRow + 4, 0f), Quaternion.identity, transform);
             chest.GetComponent<Chest>().itemName = RandomItem();
             }
 
@@ -253,7 +254,7 @@ public class LevelGeneration : MonoBehaviour
 
                 }
 
-                Instantiate(smallRockPrefab, new Vector3(cellLocation.column * 42 - 26 + rockColumn, -cellLocation.row * 24 - rockRow + 4, -0.001f), Quaternion.identity);
+                Instantiate(smallRockPrefab, new Vector3(cellLocation.column * 42 - 26 + rockColumn, -cellLocation.row * 24 - rockRow + 4, -0.001f), Quaternion.identity, transform);
             }
 
             int numOfSkullsToAdd = Mathf.RoundToInt(Random.Range(0, 3));
@@ -273,16 +274,16 @@ public class LevelGeneration : MonoBehaviour
 
                 }
 
-                Instantiate(skullPrefab, new Vector3(cellLocation.column * 42 - 26 + rockColumn, -cellLocation.row * 24 - rockRow + 4, 100f), Quaternion.identity);
+                Instantiate(skullPrefab, new Vector3(cellLocation.column * 42 - 26 + rockColumn, -cellLocation.row * 24 - rockRow + 4, 100f), Quaternion.identity, transform);
             }
         }
 
-        Instantiate(playerPrefab, new Vector3(-25, -2 * 24 - 6, 0.0001f), Quaternion.identity);
+        Instantiate(playerPrefab, new Vector3(-25, -2 * 24 - 6, -0.0017f), Quaternion.identity, transform);
         camera.GetComponent<CameraBehavior>().SetActive();
     }
 
     void InstantiateCell(CellLocation cellLocation) {
-        GameObject newRoom = Instantiate(roomPrefab, new Vector3(cellLocation.column * 42, -cellLocation.row * 24, 0), Quaternion.identity);
+        GameObject newRoom = Instantiate(roomPrefab, new Vector3(cellLocation.column * 42, -cellLocation.row * 24, 0), Quaternion.identity, transform);
         Cell cell = cells[cellLocation.row, cellLocation.column];
         foreach(Direction dir in cell.openings) {
             Destroy(newRoom.transform.GetChild((int) dir).transform.GetChild(5).gameObject);
