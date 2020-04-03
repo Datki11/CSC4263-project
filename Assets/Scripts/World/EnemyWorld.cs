@@ -41,7 +41,7 @@ public abstract class EnemyWorld : MonoBehaviour
         BattleManager.Instance.world = world;
         GameObject.FindGameObjectWithTag("PlayerUnit").GetComponent<Player>().TransferValues(playerWorld.GetComponent<Player>());
         world.SetActive(false);
-        int index = Mathf.RoundToInt(Random.Range(0, encounters.Count - 1));
+        int index = Mathf.RoundToInt(Random.Range(0, encounters.Count));
         Instantiate(encounters[index]);
         Destroy(gameObject);
         RemoveLoadingEvent();

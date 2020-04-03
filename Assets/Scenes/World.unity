@@ -260,12 +260,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccc0d62d6d6294b3c810bd78baedd023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numOfBattlesFought: 0
   numOfRows: 4
   numOfColumns: 4
   maxNumOfCells: 12
   maxNumOfChests: 6
-  maxNumOfEnemies: 6
+  maxNumOfEnemies: 7
   grass: {fileID: 2277034549323488440, guid: e197964b671e04d4a87f0c5dd83cc76a, type: 3}
   playerPrefab: {fileID: 4869541032881966215, guid: 59878b58a3bba469f85457644078bd14,
     type: 3}
