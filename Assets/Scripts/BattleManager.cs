@@ -19,6 +19,7 @@ public class BattleManager : MonoBehaviour
     public Text abilityDescriptionText;
     public Text itemDescriptionText;
     public GameObject gameOverScreen;
+    public GameObject gameWonScreen;
     private int playerMenuPos = 0;
     private int unitSelectionPos = 0;
     private int unitSelectionFriendlyPos;
@@ -35,6 +36,9 @@ public class BattleManager : MonoBehaviour
     public GameObject world;
 
     private static BattleManager _instance;
+
+    //For the prototype
+    public bool isFinalBoss = false;
 
     public static BattleManager Instance { get { return _instance; } }
     
@@ -131,8 +135,7 @@ public class BattleManager : MonoBehaviour
             }  
         }
 
-
-        if (Input.GetKeyDown(KeyCode.Return)) {
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return)) {
             if (playerMenu.activeSelf) {
                 if (playerMenuPos == 0) {
                     playerMenu.SetActive(false);
@@ -235,7 +238,7 @@ public class BattleManager : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.X)) {
             if (playerAbilityMenu.activeSelf) {
                 playerAbilityMenu.SetActive(false);
                 playerMenu.SetActive(true);
@@ -269,10 +272,16 @@ public class BattleManager : MonoBehaviour
 
         //If there are no enemies left, the battle is over and will return to the world scene
         if (enemies.Count <= 0) {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("PlayerUnit").gameObject;
-            DontDestroyOnLoad(playerObj);
-            SceneManager.sceneLoaded += SetupWorld;
-            SceneManager.LoadScene("Empty Scene");
+            //For the prototype, game ends if fighting the boss
+            if (isFinalBoss) {
+                GameWon();
+            }
+            else {
+                GameObject playerObj = GameObject.FindGameObjectWithTag("PlayerUnit").gameObject;
+                DontDestroyOnLoad(playerObj);
+                SceneManager.sceneLoaded += SetupWorld;
+                SceneManager.LoadScene("Empty Scene");
+            }
         }
 
         //Currently, this is set up to where the max party size for the player is 1
@@ -325,6 +334,9 @@ public class BattleManager : MonoBehaviour
 
     void GameOver() {
         Instantiate(gameOverScreen);
+    }
+    void GameWon() {
+        Instantiate(gameWonScreen);
     }
 
     void CheckUnitStatuses() {

@@ -35,7 +35,7 @@ public class PlayerWorldController : MonoBehaviour
             moveDir = new Vector2(moveDir.x, -1);
         rb.velocity = Vector2.ClampMagnitude(moveDir * speed, speed);
 
-        if (Input.GetKeyDown(KeyCode.Return)) {
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return)) {
             if (interactableObjects.Count > 0) {
                 GameObject obj = interactableObjects[0];
                 if (obj.tag == "Chest") {

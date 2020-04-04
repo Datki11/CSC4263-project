@@ -2351,7 +2351,10 @@ MonoBehaviour:
   itemDescriptionText: {fileID: 71690508}
   gameOverScreen: {fileID: 8471801667621530862, guid: 936e23c980ab74af9a71293e92be45a9,
     type: 3}
+  gameWonScreen: {fileID: 3871102235284419852, guid: e93ba6acd64484c9fb2a00df0ab1c4c5,
+    type: 3}
   world: {fileID: 0}
+  isFinalBoss: 0
 --- !u!1 &1874148636
 GameObject:
   m_ObjectHideFlags: 0

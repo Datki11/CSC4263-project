@@ -26,6 +26,7 @@ public abstract class EnemyWorld : MonoBehaviour
             this.gameObject.tag = "dead";
             playerWorld = GameObject.FindGameObjectWithTag("Player World");
             world = GameObject.FindGameObjectWithTag("World");
+
             DontDestroyOnLoad(playerWorld);
             DontDestroyOnLoad(world);
             Instantiate(playerWorld.GetComponent<PlayerWorldController>().worldData);
@@ -35,7 +36,7 @@ public abstract class EnemyWorld : MonoBehaviour
         }
     }
     
-    void SetupBattle(Scene scene, LoadSceneMode mode) {
+    public virtual void SetupBattle(Scene scene, LoadSceneMode mode) {
         //Randomly selects an encounter from the encounters list
         
         BattleManager.Instance.world = world;

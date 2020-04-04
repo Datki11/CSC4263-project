@@ -66,7 +66,7 @@ public class Player : Character
 			Class = new Berserker();
 
 			Items = new Dictionary<Item, int>();
-			Items.Add(new Potion(), 1);
+			Items.Add(new Potion(), 3);
 			//Items.Add(new Firecracker(), 2);
 		
     }
