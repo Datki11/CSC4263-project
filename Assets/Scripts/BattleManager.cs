@@ -146,16 +146,24 @@ public class BattleManager : MonoBehaviour
                 }
             }
             else if (playerAbilityMenu.activeSelf) {
-                //If the player selected an ability that attacks all enemies, don't do unit selection
+
                 Ability ability = _abilities[abilityMenuPos];
-                if (ability.Type == TargetType.AllEnemy) {
-                    playerAbilityMenu.SetActive(false);
-                    ability.Action(null);
-                }
-                else {
-                    playerAbilityMenu.SetActive(false);
-                    unitSelection.SetActive(true);
-                    UpdateUnitSelection();
+                //Checks to make sure the player has the rage
+                if (characters[0].GetComponent<Player>().Class.Resource.Current >= ability.Cost) {
+                    
+                    //If the player selected an ability that attacks all enemies, don't do unit selection
+                    
+                    if (ability.Type == TargetType.AllEnemy) {
+                        characters[0].GetComponent<Player>().Class.Resource.Current -= ability.Cost;
+                        playerAbilityMenu.SetActive(false);
+                        ability.Action(null);
+                    }
+                    //Do unit selection
+                    else {
+                        playerAbilityMenu.SetActive(false);
+                        unitSelection.SetActive(true);
+                        UpdateUnitSelection();
+                    }
                 }
             }
             else if (unitSelection.activeSelf) {
@@ -175,6 +183,8 @@ public class BattleManager : MonoBehaviour
                 //Using an offensive ability on an enemy
                 else {
                     var ability = _abilities[abilityMenuPos];
+                    //Depletes the player's resource
+                    characters[0].GetComponent<Player>().Class.Resource.Current -= ability.Cost;
                     switch (ability.Type)
                     {
                         case TargetType.Single:
@@ -190,6 +200,8 @@ public class BattleManager : MonoBehaviour
                             ability.Action(enemies[unitSelectionPos].GetComponent<Unit>());
                             break;
                     }
+
+                    
 
                     unitSelection.SetActive(false);
                 }
