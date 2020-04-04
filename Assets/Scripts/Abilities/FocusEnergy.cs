@@ -7,9 +7,10 @@ public class FocusEnergy : Ability
     
     // Start is called before the first frame update
     public FocusEnergy() {
-        Name = "Focus Energy";
-        Description = "increase damage and/or critical hit rate for X turns, expend Rage";
+        Name = "Fury";
+        Description = "Expends a large amount of rage to inflict a devastating blow on a single enemy";
         Type = TargetType.Self;
+        Cost = 30;
     }
 
     // Update is called once per frame
@@ -19,6 +20,6 @@ public class FocusEnergy : Ability
     }
 
     public override void Action(Unit target) {
-        //Do something
+        BattleManager.Instance.InflictDamage(target, Mathf.RoundToInt(Random.Range(22,29)));
     }
 }
