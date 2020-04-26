@@ -16,4 +16,8 @@ public class Potion : Item
     public override void Use(Unit target) {
         BattleManager.Instance.Heal(target, 30);
     }
+
+    public override void UseThroughPauseMenu(Unit target) {
+        target.CurrentHealth += 30;
+    }
 }

@@ -60,13 +60,20 @@ public class Player : Character
 	void Awake()
     {
 			MaxHealth = 40;
-			CurrentHealth = 40;
+			CurrentHealth = 20;
+
+			Level = 1;
+			CurrentExp = 0;
+			Attack = 8;
+			Speed = 3;
+			Defense = 6;
 
 			//For testing
 			Class = new Berserker();
 
 			Items = new Dictionary<Item, int>();
 			Items.Add(new Potion(), 3);
+			Items.Add(new Firecracker(), 2);
 			//Items.Add(new Firecracker(), 2);
 		
     }

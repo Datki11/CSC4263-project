@@ -565,7 +565,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 345691230}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 950}
+  m_LocalPosition: {x: 0, y: 0, z: 499}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -971,7 +971,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558436746}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 900}
+  m_LocalPosition: {x: 0, y: 0, z: 498}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1795,7 +1795,7 @@ PrefabInstance:
     - target: {fileID: 5508097722262591550, guid: b937648ad250d4f7ba0ad955a231d646,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -2.3437529
       objectReference: {fileID: 0}
     - target: {fileID: 5508097722262591550, guid: b937648ad250d4f7ba0ad955a231d646,
         type: 3}
@@ -1835,7 +1835,7 @@ PrefabInstance:
     - target: {fileID: 5508097722262591550, guid: b937648ad250d4f7ba0ad955a231d646,
         type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5508097722262591550, guid: b937648ad250d4f7ba0ad955a231d646,
         type: 3}
@@ -2142,7 +2142,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1656821546}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1000}
+  m_LocalPosition: {x: 0, y: 0, z: 500}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2514,7 +2514,7 @@ PrefabInstance:
     - target: {fileID: 5508097722262591550, guid: b937648ad250d4f7ba0ad955a231d646,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -2.3437529
       objectReference: {fileID: 0}
     - target: {fileID: 5508097722262591550, guid: b937648ad250d4f7ba0ad955a231d646,
         type: 3}
@@ -2554,7 +2554,7 @@ PrefabInstance:
     - target: {fileID: 5508097722262591550, guid: b937648ad250d4f7ba0ad955a231d646,
         type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5508097722262591550, guid: b937648ad250d4f7ba0ad955a231d646,
         type: 3}

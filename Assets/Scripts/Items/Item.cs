@@ -9,4 +9,8 @@ public abstract class Item
     public bool OnlyInBattle {get; set;}
     public bool IsFriendly {get; set;}
     public abstract void Use(Unit target);
+
+    public virtual void UseThroughPauseMenu(Unit target) {
+        Debug.Log("Method not overriden");
+    }
 }

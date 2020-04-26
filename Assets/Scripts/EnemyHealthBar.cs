@@ -22,8 +22,8 @@ public class EnemyHealthBar : MonoBehaviour
     {
         //rect.localPosition = new Vector3(unit.transform.position.x * 32 / 2, unit.transform.position.y * 32 / 2, 100);
 
-        float healthPercent = (float) unit.CurrentHealth / unit.MaxHealth * 75;
-        rect.sizeDelta = new Vector2(healthPercent, rect.sizeDelta.y);
+        float healthPercent = (float) unit.CurrentHealth / unit.MaxHealth;
+        rect.localScale = new Vector3(healthPercent, 1, 1);
         textObj.text = unit.CurrentHealth + " / " + unit.MaxHealth;
     }
 }
