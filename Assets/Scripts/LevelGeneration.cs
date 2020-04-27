@@ -10,6 +10,7 @@ public class LevelGeneration : MonoBehaviour
     public int maxNumOfCells = 12;
     private int numOfChests = 0;
     public int maxNumOfChests = 6;
+    private int firecrackersSpawned = 0;
     public int maxNumOfEnemies = 6;
     private int numOfEnemies = 0;
     private int numOfBatEnemies = 0;
@@ -317,10 +318,18 @@ public class LevelGeneration : MonoBehaviour
     }
 
     string RandomItem() {
-        if (Mathf.RoundToInt(Random.Range(0,2)) == 0)
+        if (Mathf.RoundToInt(Random.Range(0,2)) == 0) {
             return "Potion";
-        else
-            return "Firecracker";
+        }
+        else {
+            
+            if (firecrackersSpawned >= 2)
+                return "Potion";
+            else {
+                firecrackersSpawned++;
+                return "Firecracker";
+            }
+        }
 
     }
 
