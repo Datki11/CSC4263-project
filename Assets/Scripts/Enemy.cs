@@ -30,6 +30,16 @@ public abstract class Enemy : Unit
 		get;
 		set;
 	}
+	private int _exp = 5;
+	public int Exp {
+		get {return _exp;}
+		protected set {_exp =  value;}
+	}
+	private Vector2 _goldRange = new Vector2(0,5);
+	public virtual Vector2 GoldRange {
+		get {return _goldRange;}
+		protected set {_goldRange = value;}
+	}
 
 
 	private float startX;

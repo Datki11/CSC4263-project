@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BatEnemy : Enemy
+public class TentacleEnemy : Enemy
 {
     void Awake()
     {
@@ -13,7 +13,7 @@ public class BatEnemy : Enemy
         Attack = 5;
         Defense = 3;
         Speed = 6;
-        Exp = 10;
+        Exp = 7;
     }
 
     // Update is called once per frame

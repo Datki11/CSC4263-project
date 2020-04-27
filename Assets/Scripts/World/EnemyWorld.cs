@@ -27,7 +27,6 @@ public abstract class EnemyWorld : MonoBehaviour
             playerWorld = GameObject.FindGameObjectWithTag("Player World");
             world = GameObject.FindGameObjectWithTag("World");
 
-            DontDestroyOnLoad(playerWorld);
             DontDestroyOnLoad(world);
             Instantiate(playerWorld.GetComponent<PlayerWorldController>().worldData);
             SceneManager.sceneLoaded += SetupBattle;

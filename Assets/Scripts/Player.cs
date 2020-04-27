@@ -27,6 +27,10 @@ public class Player : Character
 		get;
 		set;
 	}
+	public int ExpToLevelUp {
+		get;
+		set;
+	}
 
 	//possibly wrap below stats, maybe health too, in a Stats class
 	public override int Attack
@@ -49,7 +53,9 @@ public class Player : Character
 	#region Methods
 	public override void LevelUp()
     {
-		base.LevelUp();
+		MaxHealth += 5;
+		CurrentExp = CurrentExp - ExpToLevelUp;
+		ExpToLevelUp = Mathf.RoundToInt(ExpToLevelUp * 1.4f);
     }
 
 	public
@@ -60,10 +66,11 @@ public class Player : Character
 	void Awake()
     {
 			MaxHealth = 40;
-			CurrentHealth = 20;
+			CurrentHealth = 40;
 
 			Level = 1;
-			CurrentExp = 0;
+			CurrentExp = 24;
+			ExpToLevelUp = 25;
 			Attack = 8;
 			Speed = 3;
 			Defense = 6;

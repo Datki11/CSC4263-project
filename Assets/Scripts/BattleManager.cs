@@ -20,6 +20,7 @@ public class BattleManager : MonoBehaviour
     public Text itemDescriptionText;
     public GameObject gameOverScreen;
     public GameObject gameWonScreen;
+    public GameObject levelUpMenu;
     private int playerMenuPos = 0;
     private int unitSelectionPos = 0;
     private int unitSelectionFriendlyPos;
@@ -35,6 +36,8 @@ public class BattleManager : MonoBehaviour
 
     public GameObject world;
 
+    public GameObject playerBattleEndText;
+
     private static BattleManager _instance;
 
     //For the prototype
@@ -48,6 +51,8 @@ public class BattleManager : MonoBehaviour
     }
     private Turn turn = Turn.Player;
     private int turnPos = 0;
+    private int totalExpEarned = 0;
+    private int totalGoldEarned = 0;
     void Awake()
     {
 
@@ -277,10 +282,7 @@ public class BattleManager : MonoBehaviour
                 GameWon();
             }
             else {
-                GameObject playerObj = GameObject.FindGameObjectWithTag("PlayerUnit").gameObject;
-                DontDestroyOnLoad(playerObj);
-                SceneManager.sceneLoaded += SetupWorld;
-                SceneManager.LoadScene("Empty Scene");
+                StartCoroutine("ShowBattleEndNotifications");
             }
         }
 
@@ -339,11 +341,53 @@ public class BattleManager : MonoBehaviour
         Instantiate(gameWonScreen);
     }
 
+    public void BattleEnd() {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("PlayerUnit").gameObject;
+        DontDestroyOnLoad(playerObj);
+        SceneManager.sceneLoaded += SetupWorld;
+        SceneManager.LoadScene("Empty Scene");
+    }
+
+    private IEnumerator ShowBattleEndNotifications() {
+        
+        GameObject playerObj = GameObject.FindGameObjectWithTag("PlayerUnit").gameObject;
+        Player player = playerObj.GetComponent<Player>();
+        for(int i = 0; i < playerObj.transform.childCount; i++) {
+            playerObj.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        List<string> notifications = new List<string>();
+        notifications.Add("+" + totalExpEarned.ToString() + " exp" );
+        notifications.Add("+" + totalGoldEarned.ToString() + " gold");
+        player.CurrentExp += totalExpEarned;
+        if (player.CurrentExp >= player.ExpToLevelUp) {
+            notifications.Add("Level Up");
+        }
+        foreach(string str in notifications) {
+            GameObject textObj = Instantiate(playerBattleEndText, playerObj.transform.position + new Vector3(0,1f,0), Quaternion.identity);
+            textObj.GetComponent<BattleEndText>().SetText(str);
+            if (str == "Level Up")
+                textObj.GetComponent<BattleEndText>().SetColor(Color.green);
+            yield return new WaitForSeconds(0.6f);
+        }
+        yield return new WaitForSeconds(1.25f);
+        
+        
+        if (player.CurrentExp >= player.ExpToLevelUp) {
+            player.LevelUp();
+            levelUpMenu.SetActive(true);
+            
+        }
+        else 
+            BattleEnd();
+    }
+
     void CheckUnitStatuses() {
         bool unitIsDying = false;
         if (turn == Turn.Player) {
             foreach(GameObject e in enemies) {
                 if (e.GetComponent<Unit>().CurrentHealth <= 0) {
+                    totalExpEarned += e.GetComponent<Enemy>().Exp;
+                    totalGoldEarned += Mathf.RoundToInt(Random.Range(e.GetComponent<Enemy>().GoldRange.x, e.GetComponent<Enemy>().GoldRange.y));
                     e.GetComponent<Unit>().Kill();
                     e.GetComponent<Unit>().killed.AddListener(UnitDeathEnd);
                     unitIsDying = true;
