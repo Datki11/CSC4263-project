@@ -13,7 +13,10 @@ public class Slam : Ability
         Cost = 0;
     }
 
-    public override void Action(Unit target) {
-        BattleManager.Instance.InflictDamage(target, Mathf.RoundToInt( Random.Range(15,18)));
+    public override void Action(Unit target, Unit caster) {
+        int damageMin = Mathf.Max(1, 17 - caster.Defense);
+        int damageMax = Mathf.Max(1, 22 - caster.Defense);
+
+        BattleManager.Instance.InflictDamage(target, Mathf.RoundToInt(Random.Range(damageMin,damageMax)));
     }
 }

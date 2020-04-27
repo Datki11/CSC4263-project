@@ -55,8 +55,9 @@ public class Player : Character
     {
 		Level++;
 		MaxHealth += 5;
-		CurrentExp = CurrentExp - ExpToLevelUp;
-		ExpToLevelUp = Mathf.RoundToInt(ExpToLevelUp * 1.4f);
+		CurrentExp -= ExpToLevelUp;
+		ExpToLevelUp = Mathf.RoundToInt(ExpToLevelUp * 1.3f);
+		ExpToLevelUp -= ExpToLevelUp % 5;
     }
 
 	public
@@ -70,11 +71,11 @@ public class Player : Character
 			CurrentHealth = 40;
 
 			Level = 1;
-			CurrentExp = 24;
-			ExpToLevelUp = 25;
-			Attack = 8;
-			Speed = 3;
-			Defense = 6;
+			CurrentExp = 0;
+			ExpToLevelUp = 20;
+			Attack = 5;
+			Speed = 5;
+			Defense = 5;
 
 			//For testing
 			Class = new Berserker();

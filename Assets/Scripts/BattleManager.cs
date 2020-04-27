@@ -162,9 +162,10 @@ public class BattleManager : MonoBehaviour
                     //If the player selected an ability that attacks all enemies, don't do unit selection
                     
                     if (ability.Type == TargetType.AllEnemy) {
-                        characters[0].GetComponent<Player>().Class.Resource.Current -= ability.Cost;
+                        Player player = characters[0].GetComponent<Player>();
+                        player.Class.Resource.Current -= ability.Cost;
                         playerAbilityMenu.SetActive(false);
-                        ability.Action(null);
+                        ability.Action(null, player);
                     }
                     //Do unit selection
                     else {
@@ -192,20 +193,22 @@ public class BattleManager : MonoBehaviour
                 else {
                     var ability = _abilities[abilityMenuPos];
                     //Depletes the player's resource
-                    characters[0].GetComponent<Player>().Class.Resource.Current -= ability.Cost;
+                    Player player = characters[0].GetComponent<Player>();
+                    player.Class.Resource.Current -= ability.Cost;
+                    
                     switch (ability.Type)
                     {
                         case TargetType.Single:
-                            ability.Action(enemies[unitSelectionPos].GetComponent<Unit>());
+                            ability.Action(enemies[unitSelectionPos].GetComponent<Unit>(), player);
                             break;
 
                         case TargetType.AllEnemy:
                             foreach (GameObject enemy in enemies.ToArray())
-                                ability.Action(enemy.GetComponent<Unit>());
+                                ability.Action(enemy.GetComponent<Unit>(), player);
                             break;
 
                         default:
-                            ability.Action(enemies[unitSelectionPos].GetComponent<Unit>());
+                            ability.Action(enemies[unitSelectionPos].GetComponent<Unit>(), player);
                             break;
                     }
 
@@ -296,8 +299,9 @@ public class BattleManager : MonoBehaviour
             turnPos++;
             if (turnPos > enemies.Count - 1) {
                 turn = Turn.Player;
-                var playerResource = GameObject.FindWithTag("PlayerUnit").GetComponent<Player>().Class.Resource;
-                playerResource.Current += playerResource.BaseRestoreRate;
+                Player player = GameObject.FindWithTag("PlayerUnit").GetComponent<Player>();
+                var playerResource = player.Class.Resource;
+                playerResource.Current += player.Speed * 2;
                 playerMenu.SetActive(true);
             }
             else {

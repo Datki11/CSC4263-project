@@ -77,7 +77,7 @@ public class LevelUpMenu : MonoBehaviour
             }
             UpdateMenuSelection();
         }
-        if (Input.GetKeyDown(KeyCode.Return)) {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Z)) {
             if (menuPos == 4) {
                 player.Attack += attackIncrement;
                 player.Speed += speedIncrement;

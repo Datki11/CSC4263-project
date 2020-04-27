@@ -6,7 +6,7 @@ public class Lunge : Ability
 {
     public Lunge() {
         Name = "Lunge";
-        Description = "attack first on single opponent, expend Rage";
+        Description = "attacks a single enemy";
         Type = TargetType.Single;
         Cost = 0;
     }
@@ -21,7 +21,7 @@ public class Lunge : Ability
         
     }
 
-    public override void Action(Unit target) {
-        BattleManager.Instance.InflictDamage(target, Mathf.RoundToInt(Random.Range(13,17)));
+    public override void Action(Unit target, Unit caster) {
+        BattleManager.Instance.InflictDamage(target, Mathf.RoundToInt(Random.Range(5 + caster.Attack / 2, 9 + caster.Attack / 2)));
     }
 }

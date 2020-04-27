@@ -50,7 +50,7 @@ public abstract class Enemy : Unit
         List<GameObject> characters = BattleManager.Instance.GetCharacters();
         int characterNum = Mathf.RoundToInt(Random.Range(0, characters.Count - 1));
         int abilityNum = Mathf.RoundToInt(Random.Range(0, Abilities.Count - 1));
-        Abilities[abilityNum].Action(characters[characterNum].GetComponent<Unit>());
+        Abilities[abilityNum].Action(characters[characterNum].GetComponent<Unit>(), this);
 		AttackAnimate();
 	}
 	private void AttackAnimate() {

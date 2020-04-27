@@ -193,7 +193,7 @@ public class PauseMenu : MonoBehaviour
     private void SetStatusText() {
         healthText.text = player.CurrentHealth.ToString() + " / " + player.MaxHealth.ToString();
         levelText.text = player.Level.ToString();
-        expText.text = player.CurrentExp.ToString() + " / " + "50";
+        expText.text = player.CurrentExp.ToString() + " / " + player.ExpToLevelUp.ToString();
         attackText.text = player.Attack.ToString();
         defenseText.text = player.Defense.ToString();
         speedText.text = player.Speed.ToString();

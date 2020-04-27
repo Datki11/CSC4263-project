@@ -19,7 +19,7 @@ public class FocusEnergy : Ability
         
     }
 
-    public override void Action(Unit target) {
-        BattleManager.Instance.InflictDamage(target, Mathf.RoundToInt(Random.Range(22,29)));
+    public override void Action(Unit target, Unit caster) {
+        BattleManager.Instance.InflictDamage(target, Mathf.RoundToInt(Random.Range(13 + caster.Attack / 2,17 + caster.Attack / 2)));
     }
 }

@@ -19,7 +19,10 @@ public class Bite : Ability
         
     }
 
-    public override void Action(Unit target) {
-        BattleManager.Instance.InflictDamage(target, 5);
+    public override void Action(Unit target, Unit caster) {
+        int damageMin = Mathf.Max(1, 6 - caster.Defense / 2);
+        int damageMax = Mathf.Max(1, 9 - caster.Defense / 2);
+
+        BattleManager.Instance.InflictDamage(target, Mathf.RoundToInt(Random.Range(damageMin,damageMax)));
     }
 }
