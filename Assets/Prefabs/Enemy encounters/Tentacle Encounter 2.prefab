@@ -83,8 +83,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3394649101423583892}
   - component: {fileID: 3781528745381489093}
-  - component: {fileID: 471779932489739294}
   - component: {fileID: 4155968323742178202}
+  - component: {fileID: 5366324616318172457}
   m_Layer: 0
   m_Name: Tentacle Enemy (1)
   m_TagString: EnemyUnit
@@ -158,21 +158,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &471779932489739294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269113791838113212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0005831468a194257952f34881c4795a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  killed:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!95 &4155968323742178202
 Animator:
   serializedVersion: 3
@@ -192,6 +177,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5366324616318172457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269113791838113212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 305b63a70da3a4455a6feef951b960e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2555805356817724984
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,8 +723,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1299145667887220355}
   - component: {fileID: 6145300482234223763}
-  - component: {fileID: 1208585466763660625}
   - component: {fileID: 6559720320566080023}
+  - component: {fileID: 6417047896555054}
   m_Layer: 0
   m_Name: Tentacle Enemy
   m_TagString: EnemyUnit
@@ -798,21 +798,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1208585466763660625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6107328369450676055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0005831468a194257952f34881c4795a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  killed:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!95 &6559720320566080023
 Animator:
   serializedVersion: 3
@@ -832,6 +817,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6417047896555054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6107328369450676055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 305b63a70da3a4455a6feef951b960e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6295474188135775977
 GameObject:
   m_ObjectHideFlags: 0

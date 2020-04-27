@@ -53,6 +53,7 @@ public class BattleManager : MonoBehaviour
     private int turnPos = 0;
     private int totalExpEarned = 0;
     private int totalGoldEarned = 0;
+    private bool battleEnded = false;
     void Awake()
     {
 
@@ -275,6 +276,9 @@ public class BattleManager : MonoBehaviour
     }
 
     void NextTurn() {
+
+        
+
         enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemyUnit"));
         unitSelectionPos = 0;
 
@@ -285,6 +289,12 @@ public class BattleManager : MonoBehaviour
                 GameWon();
             }
             else {
+                
+                //Prevents the function from being called twice
+                if (battleEnded)
+                    return;
+                else
+                    battleEnded =  true;
                 StartCoroutine("ShowBattleEndNotifications");
             }
         }

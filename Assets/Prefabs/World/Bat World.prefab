@@ -144,9 +144,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   encounters:
+  - {fileID: 4013683739497582296, guid: ecf8a1b88550f4f95b20198d53b08c56, type: 3}
   - {fileID: 1221674575841436507, guid: 4cffeabcbf0aa4adaa8e0073106e60db, type: 3}
   - {fileID: 9178319586728631783, guid: ae39f4f5fd67c4045b62c9e4ebd34daf, type: 3}
-  - {fileID: 4013683739497582296, guid: ecf8a1b88550f4f95b20198d53b08c56, type: 3}
   initialZ: 0
   startPos: {x: 0, y: 0}
   territoryRange: 22

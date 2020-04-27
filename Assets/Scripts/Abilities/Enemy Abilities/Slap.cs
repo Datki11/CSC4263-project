@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bite : Ability
+public class Slap : Ability
 {
-    
-    // Start is called before the first frame update
-    public Bite() {
-        Name = "Bite";
+  // Start is called before the first frame update
+    public Slap() {
+        Name = "Slap";
         Description = "An attack that deals physical damage";
         Type = TargetType.Single;
         Cost = 0;
@@ -20,8 +19,8 @@ public class Bite : Ability
     }
 
     public override void Action(Unit target, Unit caster) {
-        int damageMin = Mathf.Max(1, 4 - caster.Defense / 2);
-        int damageMax = Mathf.Max(1, 7 - caster.Defense / 2);
+        int damageMin = Mathf.Max(1, 7 - caster.Defense / 2);
+        int damageMax = Mathf.Max(1, 10 - caster.Defense / 2);
 
         BattleManager.Instance.InflictDamage(target, Mathf.RoundToInt(Random.Range(damageMin,damageMax)));
     }

@@ -8,12 +8,12 @@ public class BatEnemy : Enemy
     {
         Abilities = new List<Ability>();
         Abilities.Add(new Bite());
-        MaxHealth = 20;
-        CurrentHealth = 20;
+        MaxHealth = 15;
+        CurrentHealth = 15;
         Attack = 5;
         Defense = 3;
         Speed = 6;
-        Exp = 10;
+        Exp = 7;
     }
 
     // Update is called once per frame

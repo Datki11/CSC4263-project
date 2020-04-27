@@ -7,13 +7,13 @@ public class TentacleEnemy : Enemy
     void Awake()
     {
         Abilities = new List<Ability>();
-        Abilities.Add(new Bite());
+        Abilities.Add(new Slap());
         MaxHealth = 20;
         CurrentHealth = 20;
         Attack = 5;
         Defense = 3;
         Speed = 6;
-        Exp = 7;
+        Exp = 12;
     }
 
     // Update is called once per frame
