@@ -53,6 +53,7 @@ public class Player : Character
 	#region Methods
 	public override void LevelUp()
     {
+		Level++;
 		MaxHealth += 5;
 		CurrentExp = CurrentExp - ExpToLevelUp;
 		ExpToLevelUp = Mathf.RoundToInt(ExpToLevelUp * 1.4f);
@@ -87,7 +88,10 @@ public class Player : Character
 
 	public void TransferValues(Player player) {
 		TransferValues( (Unit) player);
+		Level = player.Level;
 		CurrentHealth = player.CurrentHealth;
+		CurrentExp = player.CurrentExp;
+		ExpToLevelUp = player.ExpToLevelUp;
 		Class.Abilities = player.Class.Abilities;
 		Items = player.Items;
 	}
