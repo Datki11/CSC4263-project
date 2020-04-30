@@ -262,7 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numOfRows: 4
   numOfColumns: 4
-  maxNumOfCells: 13
+  maxNumOfCells: 14
   maxNumOfChests: 6
   maxNumOfEnemies: 7
   grass: {fileID: 2277034549323488440, guid: e197964b671e04d4a87f0c5dd83cc76a, type: 3}
@@ -280,6 +280,8 @@ MonoBehaviour:
   skullPrefab: {fileID: 2122025514975614444, guid: 22e2c3145813f4df4a9f99c1b4723923,
     type: 3}
   bossPrefab: {fileID: 4794739361660703488, guid: d89de20ba7b5d4281a2e598c541a16f1,
+    type: 3}
+  shopPrefab: {fileID: 2722168806454646972, guid: 662d8b15759654197aa9227944ceac54,
     type: 3}
   enemies:
   - {fileID: 615613206895032766, guid: 6717357686f7c46f286cc84ec600dd65, type: 3}

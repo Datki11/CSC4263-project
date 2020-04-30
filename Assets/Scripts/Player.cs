@@ -48,6 +48,11 @@ public class Player : Character
 		get;
 		set;
 	}
+
+	public int Gold {
+		get;
+		set;
+	}
 	#endregion
 
 	#region Methods
@@ -76,6 +81,7 @@ public class Player : Character
 			Attack = 5;
 			Speed = 5;
 			Defense = 5;
+			Gold = 0;
 
 			//For testing
 			Class = new Berserker();
@@ -95,6 +101,7 @@ public class Player : Character
 		ExpToLevelUp = player.ExpToLevelUp;
 		Class.Abilities = player.Class.Abilities;
 		Items = player.Items;
+		Gold = player.Gold;
 	}
 
 	public void AddItem (Item item) {

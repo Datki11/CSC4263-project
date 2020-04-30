@@ -25,6 +25,7 @@ public class LevelGeneration : MonoBehaviour
     public GameObject smallRockPrefab;
     public GameObject skullPrefab;
     public GameObject bossPrefab;
+    public GameObject shopPrefab;
     public List<GameObject> enemies;
     public Cell[,] cells;
     public enum Direction {
@@ -155,6 +156,7 @@ public class LevelGeneration : MonoBehaviour
 
         roomsLeftToCreate = maxNumOfCells;
         bool bossIsSpawned = false;
+        bool shopIsSpawned = false;
 
         foreach (CellLocation cellLocation in cellsInPath) {
             Cell cell = cells[cellLocation.row, cellLocation.column];
@@ -163,6 +165,55 @@ public class LevelGeneration : MonoBehaviour
             int numOfTreesToAdd = Mathf.RoundToInt(Random.Range(3, 12));
             bool[,] roomSpaces = new bool[14,36];
 
+            //Spawning shop
+            bool shopIsInThisRoom = false;
+            if (cellLocation.column == 3 && !shopIsSpawned) {
+                
+                bool foundPlace = false;
+                int enemyRow = 0, enemyColumn = 0;
+                while (!foundPlace) {
+                    enemyRow = Mathf.RoundToInt(Random.Range(6, 8));
+                    enemyColumn = Mathf.RoundToInt(Random.Range(16, 20));
+                    if (!roomSpaces[enemyRow, enemyColumn]) {
+                        foundPlace = true;
+
+                        //End me
+                        roomSpaces[enemyRow, enemyColumn] = true;
+                        roomSpaces[enemyRow - 1, enemyColumn] = true;
+                        roomSpaces[enemyRow + 1, enemyColumn] = true;
+                        roomSpaces[enemyRow, enemyColumn + 1] = true;
+                        roomSpaces[enemyRow + 1, enemyColumn + 1] = true;
+                        roomSpaces[enemyRow - 1, enemyColumn + 1] = true;
+                        roomSpaces[enemyRow, enemyColumn -1] = true;
+                        roomSpaces[enemyRow + 1, enemyColumn -1] = true;
+                        roomSpaces[enemyRow - 1, enemyColumn] = true;
+                        roomSpaces[enemyRow - 2, enemyColumn + 1] = true;
+                        roomSpaces[enemyRow - 2, enemyColumn] = true;
+                        roomSpaces[enemyRow - 2, enemyColumn -1] = true;
+                        roomSpaces[enemyRow + 2, enemyColumn + 1] = true;
+                        roomSpaces[enemyRow + 2, enemyColumn] = true;
+                        roomSpaces[enemyRow + 2, enemyColumn -1] = true;
+                        roomSpaces[enemyRow, enemyColumn + 2] = true;
+                        roomSpaces[enemyRow, enemyColumn - 2] = true;
+                        roomSpaces[enemyRow + 1, enemyColumn + 2] = true;
+                        roomSpaces[enemyRow + 1, enemyColumn - 2] = true;
+                        roomSpaces[enemyRow - 1, enemyColumn + 2] = true;
+                        roomSpaces[enemyRow - 1, enemyColumn - 2] = true;
+                        roomSpaces[enemyRow - 2, enemyColumn + 2] = true;
+                        roomSpaces[enemyRow - 2, enemyColumn - 2] = true;
+                        roomSpaces[enemyRow + 2, enemyColumn + 2] = true;
+                        roomSpaces[enemyRow + 2, enemyColumn - 2] = true;
+                        
+                    }
+                }
+
+                Instantiate(shopPrefab, new Vector3(cellLocation.column * 42 - 26 + enemyColumn, -cellLocation.row * 24 - enemyRow + 4, -0.0035f), Quaternion.identity, transform);
+                shopIsSpawned = true;
+                shopIsInThisRoom = true;
+
+            }
+
+            //Spawning trees
             for (int i = 0; i < numOfTreesToAdd; i++) {
                 bool foundPlace = false;
                 int treeRow = 0, treeColumn = 0;
@@ -184,7 +235,7 @@ public class LevelGeneration : MonoBehaviour
 
             //Spawning boss
             bool bossIsInThisRoom = false;
-            if (cellLocation.column == 3 && !bossIsSpawned) {
+            if (cellLocation.column == 3 && !bossIsSpawned && !shopIsInThisRoom) {
                 
                 bool foundPlace = false;
                 int enemyRow = 0, enemyColumn = 0;
@@ -193,7 +244,33 @@ public class LevelGeneration : MonoBehaviour
                     enemyColumn = Mathf.RoundToInt(Random.Range(16, 20));
                     if (!roomSpaces[enemyRow, enemyColumn]) {
                         foundPlace = true;
+
+                        //3 years of college education for this
                         roomSpaces[enemyRow, enemyColumn] = true;
+                        roomSpaces[enemyRow - 1, enemyColumn] = true;
+                        roomSpaces[enemyRow + 1, enemyColumn] = true;
+                        roomSpaces[enemyRow, enemyColumn + 1] = true;
+                        roomSpaces[enemyRow + 1, enemyColumn + 1] = true;
+                        roomSpaces[enemyRow - 1, enemyColumn + 1] = true;
+                        roomSpaces[enemyRow, enemyColumn -1] = true;
+                        roomSpaces[enemyRow + 1, enemyColumn -1] = true;
+                        roomSpaces[enemyRow - 1, enemyColumn] = true;
+                        roomSpaces[enemyRow - 2, enemyColumn + 1] = true;
+                        roomSpaces[enemyRow - 2, enemyColumn] = true;
+                        roomSpaces[enemyRow - 2, enemyColumn -1] = true;
+                        roomSpaces[enemyRow + 2, enemyColumn + 1] = true;
+                        roomSpaces[enemyRow + 2, enemyColumn] = true;
+                        roomSpaces[enemyRow + 2, enemyColumn -1] = true;
+                        roomSpaces[enemyRow, enemyColumn + 2] = true;
+                        roomSpaces[enemyRow, enemyColumn - 2] = true;
+                        roomSpaces[enemyRow + 1, enemyColumn + 2] = true;
+                        roomSpaces[enemyRow + 1, enemyColumn - 2] = true;
+                        roomSpaces[enemyRow - 1, enemyColumn + 2] = true;
+                        roomSpaces[enemyRow - 1, enemyColumn - 2] = true;
+                        roomSpaces[enemyRow - 2, enemyColumn + 2] = true;
+                        roomSpaces[enemyRow - 2, enemyColumn - 2] = true;
+                        roomSpaces[enemyRow + 2, enemyColumn + 2] = true;
+                        roomSpaces[enemyRow + 2, enemyColumn - 2] = true;
                     }
                 }
 
@@ -203,7 +280,8 @@ public class LevelGeneration : MonoBehaviour
 
             }
             
-            if (!bossIsInThisRoom) {
+            //Spawning enemies
+            if (!bossIsInThisRoom && !shopIsInThisRoom) {
                 int numOfEnemiesToAdd = Mathf.RoundToInt(Random.Range(0,2));
                 if (cellLocation.row == 2 && cellLocation.column == 0) //Don't spawn enemies in the starting room
                     numOfEnemiesToAdd = 0;
@@ -239,6 +317,8 @@ public class LevelGeneration : MonoBehaviour
                 }
             }
 
+
+            //Spawning chests
             int numOfChestsToAdd = Mathf.RoundToInt(Random.Range(0, 2));
             if (cellLocation.row == 2 && cellLocation.column == 0)
                 numOfChestsToAdd = 0;
@@ -261,6 +341,7 @@ public class LevelGeneration : MonoBehaviour
             chest.GetComponent<Chest>().itemName = RandomItem();
             }
 
+            //Spawning rocks
             int numOfRocksToAdd = Mathf.RoundToInt(Random.Range(0, 6));
             for (int i = 0; i < numOfRocksToAdd; i++) {
                 bool foundPlace = false;
@@ -281,6 +362,7 @@ public class LevelGeneration : MonoBehaviour
                 Instantiate(smallRockPrefab, new Vector3(cellLocation.column * 42 - 26 + rockColumn, -cellLocation.row * 24 - rockRow + 4, -0.001f), Quaternion.identity, transform);
             }
 
+            //Spawning skulls
             int numOfSkullsToAdd = Mathf.RoundToInt(Random.Range(0, 3));
             for (int i = 0; i < numOfSkullsToAdd; i++) {
                 bool foundPlace = false;

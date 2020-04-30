@@ -373,6 +373,7 @@ public class BattleManager : MonoBehaviour
         notifications.Add("+" + totalExpEarned.ToString() + " exp" );
         notifications.Add("+" + totalGoldEarned.ToString() + " gold");
         player.CurrentExp += totalExpEarned;
+        player.Gold += totalGoldEarned;
         if (player.CurrentExp >= player.ExpToLevelUp) {
             notifications.Add("Level Up");
         }

@@ -14,6 +14,7 @@ public class TentacleEnemy : Enemy
         Defense = 3;
         Speed = 6;
         Exp = 12;
+        GoldRange = new Vector2(5, 7);
     }
 
     // Update is called once per frame

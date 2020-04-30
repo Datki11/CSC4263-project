@@ -45,6 +45,9 @@ public class PlayerWorldController : MonoBehaviour
                     
                     GetComponent<Player>().AddItem(chestItem);
                 }
+                else if (obj.tag == "Shop") {
+                    GlobalControls.Instance.OpenShopMenu();
+                }
             }
         }
 
@@ -54,6 +57,9 @@ public class PlayerWorldController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider) {
 
         if (collider.gameObject.tag == "Chest") {
+            interactableObjects.Add(collider.gameObject);
+        }
+        if (collider.gameObject.tag == "Shop") {
             interactableObjects.Add(collider.gameObject);
         }
         

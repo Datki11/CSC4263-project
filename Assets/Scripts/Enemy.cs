@@ -35,7 +35,7 @@ public abstract class Enemy : Unit
 		get {return _exp;}
 		protected set {_exp =  value;}
 	}
-	private Vector2 _goldRange = new Vector2(0,5);
+	private Vector2 _goldRange = new Vector2(2,5);
 	public virtual Vector2 GoldRange {
 		get {return _goldRange;}
 		protected set {_goldRange = value;}
