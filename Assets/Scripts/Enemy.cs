@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public abstract class Enemy : Unit
 {
+	public Dictionary<Item, int> Items { get; set; }
 	public List<Ability> Abilities {
 		get;
 		set;
@@ -30,6 +31,7 @@ public abstract class Enemy : Unit
 		get;
 		set;
 	}
+
 	private int _exp = 5;
 	public int Exp {
 		get {return _exp;}
@@ -53,7 +55,12 @@ public abstract class Enemy : Unit
         List<GameObject> characters = BattleManager.Instance.GetCharacters();
         int characterNum = Mathf.RoundToInt(Random.Range(0, characters.Count));
         int abilityNum = Mathf.RoundToInt(Random.Range(0, Abilities.Count));
-        Abilities[abilityNum].Action(characters[characterNum].GetComponent<Unit>(), this);
+		int abilityOrItem = Random.Range(0, 2);
+		if(abilityOrItem == 0)
+			Abilities[abilityNum].Action(characters[characterNum].GetComponent<Unit>(), this);
+		else
+			//update this with item usage
+			Abilities[abilityNum].Action(characters[characterNum].GetComponent<Unit>(), this);
 		AttackAnimate();
 	}
 	private void AttackAnimate() {
