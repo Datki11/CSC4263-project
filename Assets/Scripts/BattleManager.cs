@@ -84,7 +84,7 @@ public class BattleManager : MonoBehaviour
             if (playerMenu.activeSelf) {
                 playerMenuPos--;
                 if (playerMenuPos < 0)
-                    playerMenuPos = 3;
+                    playerMenuPos = 2;
                 UpdateMenuSelection();
             }
             else if (unitSelection.activeSelf) {
@@ -96,7 +96,7 @@ public class BattleManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightArrow)) {
             if (playerMenu.activeSelf) {
                 playerMenuPos++;
-                if (playerMenuPos > 3)
+                if (playerMenuPos > 2)
                     playerMenuPos = 0;
                 UpdateMenuSelection();
             }
@@ -525,7 +525,7 @@ public class BattleManager : MonoBehaviour
 
     void UpdateMenuSelection() {
         RectTransform rect = playerMenuSelection.GetComponent<RectTransform>();
-        rect.localPosition = new Vector3(-72 + playerMenuPos * 48, rect.localPosition.y, rect.localPosition.z);
+        rect.localPosition = new Vector3(-48 + playerMenuPos * 48, rect.localPosition.y, rect.localPosition.z);
     }
 
     void UpdateUnitSelection() {

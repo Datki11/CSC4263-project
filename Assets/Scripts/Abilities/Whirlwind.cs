@@ -8,7 +8,7 @@ public class Whirlwind : Ability
         Name = "Whirlwind";
         Description = "Attack all enemies by using rage";
         Type = TargetType.AllEnemy;
-        Cost = 10;
+        Cost = 20;
     }
     // Start is called before the first frame update
     void Start()
