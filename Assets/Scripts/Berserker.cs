@@ -70,7 +70,9 @@ public class Berserker : ICharClass
 			new Lunge(),
 			new Whirlwind(),
 			new FocusEnergy(),
-			new FocusPower()
+			new FocusPower(),
+			new Stoneskin(),
+			new Unwind()
 		};
 
 		Resource = new Rage();

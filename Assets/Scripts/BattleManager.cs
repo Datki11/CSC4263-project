@@ -108,10 +108,7 @@ public class BattleManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.DownArrow)) {
             if (playerAbilityMenu.activeSelf) {
-                abilityMenuPos++;
-                if (abilityMenuPos > abilityTexts.Count - 1)
-                    abilityMenuPos = 0;
-                UpdateAbilityMenuSelection();
+                AbilityMenuDescend();
             }
             else if (unitSelection.activeSelf) {
                 UnitSelectionAscend();
@@ -127,10 +124,7 @@ public class BattleManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.UpArrow)) {
             if (playerAbilityMenu.activeSelf) {
-                abilityMenuPos--;
-                if (abilityMenuPos < 0)
-                    abilityMenuPos = abilityTexts.Count - 1;
-                UpdateAbilityMenuSelection();
+                AbilityMenuAscend();
             }
             else if (unitSelection.activeSelf) {
                 UnitSelectionDescend();
@@ -472,6 +466,7 @@ public class BattleManager : MonoBehaviour
     }
 
     void PopulateAbilityMenu(List<Ability> abilities) {
+        int pageNum = abilityMenuPos / 4;
         _abilities = abilities;
         int offset = 0;
         if (abilityTexts != null) {
@@ -479,7 +474,8 @@ public class BattleManager : MonoBehaviour
                 Destroy(obj.gameObject);
         }
         abilityTexts = new List<GameObject>();
-        foreach (Ability ability in abilities) {
+        for (int i = pageNum * 4; i < pageNum * 4 + 4 && i < abilities.Count; i++ ) {
+            Ability ability = abilities[i];
             var text = Instantiate(abilityText, Vector3.zero, Quaternion.identity, playerAbilityMenu.transform);
             text.GetComponent<Text>().text = ability.Name;
             RectTransform textRect = text.GetComponent<RectTransform>();
@@ -492,7 +488,7 @@ public class BattleManager : MonoBehaviour
     }
     void UpdateAbilityMenuSelection() {
         RectTransform rect = abilityMenuSelection.GetComponent<RectTransform>();
-        RectTransform textRect = abilityTexts[abilityMenuPos].GetComponent<RectTransform>();
+        RectTransform textRect = abilityTexts[abilityMenuPos % 4].GetComponent<RectTransform>();
         rect.localPosition = new Vector3(textRect.localPosition.x - (textRect.sizeDelta.x / 2) - 8, textRect.localPosition.y + (textRect.sizeDelta.y / 4) + 1, 100);
         abilityDescriptionText.text = _abilities[abilityMenuPos].Description + "\n\nCost: " + _abilities[abilityMenuPos].Cost;
     }
@@ -553,6 +549,31 @@ public class BattleManager : MonoBehaviour
         if (unitSelectionPos > enemies.Count - 1)
             unitSelectionPos = 0;
         UpdateUnitSelection();
+    }
+    void AbilityMenuDescend() {
+        int oldPos = abilityMenuPos;
+        abilityMenuPos++;
+        if (abilityMenuPos / 4 > oldPos / 4) {
+            PopulateAbilityMenu(_abilities);
+        }
+        if (abilityMenuPos > _abilities.Count - 1) {
+            abilityMenuPos = 0;
+            PopulateAbilityMenu(_abilities);
+        }
+        UpdateAbilityMenuSelection();
+    }
+
+    void AbilityMenuAscend() {
+        int oldPos = abilityMenuPos;
+        abilityMenuPos--;
+        if (abilityMenuPos / 4 < oldPos / 4) {
+            PopulateAbilityMenu(_abilities);
+        }
+        if (abilityMenuPos < 0) {
+            abilityMenuPos = _abilities.Count - 1;
+            PopulateAbilityMenu(_abilities);
+        }
+        UpdateAbilityMenuSelection();
     }
 
     public void InflictDamage(Unit target, Unit caster, float damage) {
