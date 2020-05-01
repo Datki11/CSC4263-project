@@ -73,7 +73,8 @@ public class Berserker : ICharClass
 		{
 			new Lunge(),
 			new Whirlwind(),
-			new FocusEnergy()
+			new FocusEnergy(),
+			new Stoneskin()
 		};
 		UnlearnedAbilities = new List<Ability> {
 			new FocusPower(),
