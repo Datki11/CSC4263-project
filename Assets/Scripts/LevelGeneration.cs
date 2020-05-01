@@ -282,7 +282,9 @@ public class LevelGeneration : MonoBehaviour
             
             //Spawning enemies
             if (!bossIsInThisRoom && !shopIsInThisRoom) {
-                int numOfEnemiesToAdd = Mathf.RoundToInt(Random.Range(0,2));
+                int numOfEnemiesToAdd = 0;
+                if (Random.Range(0,1) <= 0.68f)
+                    numOfEnemiesToAdd = 1;
                 if (cellLocation.row == 2 && cellLocation.column == 0) //Don't spawn enemies in the starting room
                     numOfEnemiesToAdd = 0;
                 //There are just enough rooms to fill in the remaining enemies, so can't have any more empty rooms

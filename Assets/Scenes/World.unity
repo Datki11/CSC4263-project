@@ -264,7 +264,7 @@ MonoBehaviour:
   numOfColumns: 4
   maxNumOfCells: 14
   maxNumOfChests: 6
-  maxNumOfEnemies: 7
+  maxNumOfEnemies: 8
   grass: {fileID: 2277034549323488440, guid: e197964b671e04d4a87f0c5dd83cc76a, type: 3}
   playerPrefab: {fileID: 4869541032881966215, guid: 59878b58a3bba469f85457644078bd14,
     type: 3}
