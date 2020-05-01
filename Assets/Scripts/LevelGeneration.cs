@@ -303,17 +303,9 @@ public class LevelGeneration : MonoBehaviour
 
                     int indexOfEnemyToSpawn = Mathf.RoundToInt(Random.Range(0, enemies.Count));
                     //Making sure there's a good distribution
-                    if (indexOfEnemyToSpawn == 0 && numOfBatEnemies >= 3)
-                        indexOfEnemyToSpawn = 1;
-                    if (indexOfEnemyToSpawn == 1 && numOfTentacleEnemies >= 4)
-                        indexOfEnemyToSpawn = 0;
                     
                     Instantiate(enemies[indexOfEnemyToSpawn], new Vector3(cellLocation.column * 42 - 26 + enemyColumn, -cellLocation.row * 24 - enemyRow + 4, -0.0018f), Quaternion.identity, transform);
                     numOfEnemies++;
-                    if (indexOfEnemyToSpawn == 0)
-                        numOfBatEnemies++;
-                    else
-                        numOfTentacleEnemies++;
                 }
             }
 
