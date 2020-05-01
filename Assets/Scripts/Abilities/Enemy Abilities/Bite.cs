@@ -23,6 +23,6 @@ public class Bite : Ability
         int damageMin = Mathf.Max(1, 4 - caster.Defense / 2);
         int damageMax = Mathf.Max(1, 7 - caster.Defense / 2);
 
-        BattleManager.Instance.InflictDamage(target, Mathf.RoundToInt(Random.Range(damageMin,damageMax)));
+        BattleManager.Instance.InflictDamage(target, caster, Mathf.RoundToInt(Random.Range(damageMin,damageMax)));
     }
 }

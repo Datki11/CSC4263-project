@@ -9,7 +9,7 @@ public class FocusEnergy : Ability
     public FocusEnergy() {
         Name = "Fury";
         Description = "Expends a large amount of rage to inflict a devastating blow on a single enemy";
-        Type = TargetType.Self;
+        Type = TargetType.Single;
         Cost = 30;
     }
 
@@ -20,6 +20,6 @@ public class FocusEnergy : Ability
     }
 
     public override void Action(Unit target, Unit caster) {
-        BattleManager.Instance.InflictDamage(target, Mathf.RoundToInt(Random.Range(13 + caster.Attack / 2,17 + caster.Attack / 2)));
+        BattleManager.Instance.InflictDamage(target, caster, Mathf.RoundToInt(Random.Range(13 + caster.Attack / 2,17 + caster.Attack / 2)));
     }
 }

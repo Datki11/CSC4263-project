@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public abstract class Unit : MonoBehaviour
 {
+	public List<StatusEffect> statusEffects;
     public abstract int MaxHealth
 	{
 		get;
@@ -40,6 +41,10 @@ public abstract class Unit : MonoBehaviour
 		set;
 	}
 	public UnityEvent killed;
+
+	public virtual void Awake() {
+		statusEffects = new List<StatusEffect>();
+	}
 
 	public void Kill() {
 		KillAnimate();

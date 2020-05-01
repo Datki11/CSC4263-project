@@ -17,6 +17,6 @@ public class Slam : Ability
         int damageMin = Mathf.Max(1, 17 - caster.Defense);
         int damageMax = Mathf.Max(1, 22 - caster.Defense);
 
-        BattleManager.Instance.InflictDamage(target, Mathf.RoundToInt(Random.Range(damageMin,damageMax)));
+        BattleManager.Instance.InflictDamage(target, caster, Mathf.RoundToInt(Random.Range(damageMin,damageMax)));
     }
 }

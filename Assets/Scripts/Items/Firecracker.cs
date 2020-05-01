@@ -14,6 +14,6 @@ public class Firecracker : Item
     }
 
     public override void Use(Unit target) {
-        BattleManager.Instance.InflictDamage(target, 15);
+        BattleManager.Instance.InflictDamage(target, null, 15);
     }
 }

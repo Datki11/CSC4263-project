@@ -43,7 +43,10 @@ public abstract class Enemy : Unit
 
 
 	private float startX;
-
+	public override void Awake() {
+		base.Awake();
+		statusEffects = new List<StatusEffect>();
+	}
 	public virtual void Act() {
 
 		//Default implementation is a completely random attack

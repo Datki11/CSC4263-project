@@ -5,8 +5,9 @@ using UnityEngine;
 public class BossEnemy : Enemy
 {
     // Start is called before the first frame update
-    void Awake()
+    public override void Awake()
     {
+        base.Awake();
         Abilities = new List<Ability>();
         Abilities.Add(new Slam());
         MaxHealth = 60;

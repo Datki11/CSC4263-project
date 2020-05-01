@@ -54,6 +54,7 @@ public class BattleManager : MonoBehaviour
     private int totalExpEarned = 0;
     private int totalGoldEarned = 0;
     private bool battleEnded = false;
+    private List<StatusEffect> playerStatusEffects;
     void Awake()
     {
 
@@ -69,6 +70,7 @@ public class BattleManager : MonoBehaviour
     void Start() {
         characters = new List<GameObject>(GameObject.FindGameObjectsWithTag("PlayerUnit"));
         enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemyUnit"));
+        playerStatusEffects = new List<StatusEffect>();
     }
 
     // Update is called once per frame
@@ -171,6 +173,15 @@ public class BattleManager : MonoBehaviour
                         player.Class.Resource.Current -= ability.Cost;
                         playerAbilityMenu.SetActive(false);
                         ability.Action(null, player);
+                    }
+
+                    //If the player selected an ability that affects himself, don't do unit selection
+                    else  if (ability.Type == TargetType.Self) {
+                        Player player = characters[0].GetComponent<Player>();
+                        player.Class.Resource.Current -= ability.Cost;
+                        ability.Action(null, player);
+                        playerAbilityMenu.SetActive(false);
+
                     }
                     //Do unit selection
                     else {
@@ -316,7 +327,16 @@ public class BattleManager : MonoBehaviour
                 Player player = GameObject.FindWithTag("PlayerUnit").GetComponent<Player>();
                 var playerResource = player.Class.Resource;
                 playerResource.Current += player.Speed * 2;
+                if (playerResource.Current > playerResource.BaseMax)
+                    playerResource.Current = playerResource.BaseMax;
                 playerMenu.SetActive(true);
+                foreach(StatusEffect statusEffect in player.statusEffects) {
+                    statusEffect.rounds--;
+                    if (statusEffect.rounds <= 0) {
+                        player.statusEffects.Remove(statusEffect);
+                        
+                    }
+                }
             }
             else {
                 DoEnemyTurn();
@@ -535,7 +555,30 @@ public class BattleManager : MonoBehaviour
         UpdateUnitSelection();
     }
 
-    public void InflictDamage(Unit target, float damage) {
+    public void InflictDamage(Unit target, Unit caster, float damage) {
+
+        //Applies status effects
+        if (target.statusEffects.Count > 0) {
+            StatusEffect statusEffect;
+
+            statusEffect = target.statusEffects.Find(x => x.type == StatusEffectType.ReduceDamage);
+            if (statusEffect != null) {
+                ReduceDamage reduceDamage = (ReduceDamage) statusEffect;
+                damage -= damage * reduceDamage.magnitude;
+            }
+        }
+
+        if (caster != null) {
+            if (caster.statusEffects.Count > 0) {
+                StatusEffect statusEffect = caster.statusEffects.Find(x => x.type == StatusEffectType.IncreaseAttackSingleUse);
+                if (statusEffect != null) {
+                    IncreaseAttack increaseAttack = (IncreaseAttack) statusEffect;
+                    damage =(float) damage * (1f + increaseAttack.magnitude);
+                    caster.statusEffects.Remove(statusEffect);
+                }
+            }
+        }
+
         target.CurrentHealth -= (int) damage;
         var pos = target.gameObject.transform.position;
         var o = Instantiate(damageText, pos + new Vector3(0.25f,target.gameObject.GetComponent<SpriteRenderer>().bounds.size.y / 2,0), Quaternion.identity);
@@ -549,7 +592,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void InflictDamageToAllUnits(UnitType unitType, float damage) {
+    public void InflictDamageToAllUnits(UnitType unitType, Unit caster, float damage) {
         if (unitType == UnitType.Enemy) {
             bool eventSet = false;
             foreach(GameObject enemy in enemies) {
@@ -578,6 +621,63 @@ public class BattleManager : MonoBehaviour
         dText.SetText( (int) amount );
         dText.SetColor(Color.green);
         dText.destroyed.AddListener(CheckUnitStatuses);
+    }
+    public void HealWithRage() {
+        Player target = characters[0].GetComponent<Player>();
+        int rage = target.Class.Resource.Current;
+        target.Class.Resource.Current = 0;
+        int amount = Mathf.RoundToInt((float) rage / 70 * target.MaxHealth);
+        target.CurrentHealth += (int) amount;
+        if (target.CurrentHealth > target.MaxHealth)
+            target.CurrentHealth = target.MaxHealth;
+        var pos = target.gameObject.transform.position;
+        var o = Instantiate(damageText, pos + new Vector3(0.25f,target.gameObject.GetComponent<SpriteRenderer>().bounds.size.y / 2,0), Quaternion.identity);
+        var dText = o.GetComponent<DamageText>();
+        dText.SetText( (int) amount );
+        dText.SetColor(Color.green);
+        dText.destroyed.AddListener(CheckUnitStatuses);
+    }
+
+    public void IncreaseDefense(Unit target, float percent, int rounds) {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("PlayerUnit").gameObject;
+        Player player = playerObj.GetComponent<Player>();
+        ReduceDamage statusEffect = (ReduceDamage) player.statusEffects.Find(x => x.type == StatusEffectType.ReduceDamage);
+        if (statusEffect != null) {
+            statusEffect.rounds = rounds;
+            statusEffect.magnitude = percent;
+        }
+        else {
+            statusEffect = new ReduceDamage();
+            statusEffect.rounds = rounds;
+            statusEffect.magnitude = percent;
+            player.statusEffects.Add(statusEffect);
+        }
+        GameObject textObj = Instantiate(playerBattleEndText, playerObj.transform.position + new Vector3(0,2f,0), Quaternion.identity);
+        textObj.GetComponent<BattleEndText>().SetText("+ Defense");
+        textObj.GetComponent<BattleEndText>().SetColor(Color.green);
+        Invoke("NextTurn", 1.5f);
+
+    }
+
+    public void IncreaseAttack(Unit target, float percent, int rounds) {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("PlayerUnit").gameObject;
+        Player player = playerObj.GetComponent<Player>();
+        IncreaseAttack statusEffect = (IncreaseAttack) player.statusEffects.Find(x => x.type == StatusEffectType.IncreaseAttackSingleUse);
+        if (statusEffect != null) {
+            statusEffect.rounds = rounds;
+            statusEffect.magnitude = percent;
+        }
+        else {
+            statusEffect = new IncreaseAttack();
+            statusEffect.rounds = rounds;
+            statusEffect.magnitude = percent;
+            player.statusEffects.Add(statusEffect);
+        }
+        GameObject textObj = Instantiate(playerBattleEndText, playerObj.transform.position + new Vector3(0,2f,0), Quaternion.identity);
+        textObj.GetComponent<BattleEndText>().SetText("+ Attack");
+        textObj.GetComponent<BattleEndText>().SetColor(Color.green);
+        Invoke("NextTurn", 1.5f);
+
     }
     public void IncreaseRage(Unit _target, float amount) {
         Player target = characters[0].GetComponent<Player>();

@@ -23,7 +23,7 @@ public class Whirlwind : Ability
     }
 
     public override void Action(Unit target, Unit caster) {
-        BattleManager.Instance.InflictDamageToAllUnits(UnitType.Enemy, Mathf.RoundToInt(Random.Range(2 + caster.Attack, 5 + caster.Attack)));
+        BattleManager.Instance.InflictDamageToAllUnits(UnitType.Enemy, caster, Mathf.RoundToInt(Random.Range(2 + caster.Attack, 5 + caster.Attack)));
         
     }
 }

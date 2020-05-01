@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class BatEnemy : Enemy
 {
-    void Awake()
+    public override void Awake()
     {
+        base.Awake();
         Abilities = new List<Ability>();
         Abilities.Add(new Bite());
         MaxHealth = 15;

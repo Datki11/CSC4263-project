@@ -34,19 +34,12 @@ public abstract class Character : Unit
 		Defense += Class.DefenseIncrement;
 		Speed += Class.SpeedIncrement;
 	}
+	public override void Awake() {
+		base.Awake();
+	}
 	#endregion
 
 	#region MonoBehaviour
 	// Start is called before the first frame update
-	void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 	#endregion
 }

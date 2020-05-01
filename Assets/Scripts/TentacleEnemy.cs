@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TentacleEnemy : Enemy
 {
-    void Awake()
+    public override void Awake()
     {
+        base.Awake();
         Abilities = new List<Ability>();
         Abilities.Add(new Slap());
         MaxHealth = 20;

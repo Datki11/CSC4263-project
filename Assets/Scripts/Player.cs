@@ -7,6 +7,7 @@ public class Player : Character
 	#region Public Properties
 	
 	public Dictionary<Item, int> Items {get; set;}
+	
 	public override ICharClass Class
 	{
 		get;
@@ -64,14 +65,13 @@ public class Player : Character
 		ExpToLevelUp = Mathf.RoundToInt(ExpToLevelUp * 1.3f);
 		ExpToLevelUp -= ExpToLevelUp % 5;
     }
-
-	public
 	#endregion
 
 	#region MonoBehaviour
 	// Start is called before the first frame update
-	void Awake()
+	public override void Awake()
     {
+			base.Awake();
 			MaxHealth = 40;
 			CurrentHealth = 40;
 

@@ -7,7 +7,7 @@ public class PlayerWorldController : MonoBehaviour
 {
 
     private Rigidbody2D rb;
-    private float speed = 8f;
+    private float speed = 10f;
     public float initialZ;
     public GameObject worldData;
     private List<GameObject> interactableObjects;

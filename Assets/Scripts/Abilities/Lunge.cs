@@ -22,6 +22,6 @@ public class Lunge : Ability
     }
 
     public override void Action(Unit target, Unit caster) {
-        BattleManager.Instance.InflictDamage(target, Mathf.RoundToInt(Random.Range(5 + caster.Attack / 2, 9 + caster.Attack / 2)));
+        BattleManager.Instance.InflictDamage(target, caster, Mathf.RoundToInt(Random.Range(5 + caster.Attack / 2, 9 + caster.Attack / 2)));
     }
 }
