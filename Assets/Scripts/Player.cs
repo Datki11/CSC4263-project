@@ -102,6 +102,7 @@ public class Player : Character
 		CurrentExp = player.CurrentExp;
 		ExpToLevelUp = player.ExpToLevelUp;
 		Class.Abilities = player.Class.Abilities;
+		Class.UnlearnedAbilities = player.Class.UnlearnedAbilities;
 		Items = player.Items;
 		Gold = player.Gold;
 	}

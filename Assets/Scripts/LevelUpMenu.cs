@@ -17,6 +17,7 @@ public class LevelUpMenu : MonoBehaviour
     private int speedIncrement;
     public GameObject menuTexts;
     public GameObject menuIndicator;
+    public GameObject newAbilityMenu;
     public Text pointsLeftText;
     private int points;
     public UnityEvent finished;
@@ -83,7 +84,12 @@ public class LevelUpMenu : MonoBehaviour
                 player.Speed += speedIncrement;
                 player.Defense += defenseIncrement;
                 finished?.Invoke();
-                BattleManager.Instance.BattleEnd();
+                if (player.Level == 2 || player.Level == 4 || player.Level == 7 || player.Level == 10) {
+                    gameObject.SetActive(false);
+                    newAbilityMenu.SetActive(true);
+                }
+                else
+                    BattleManager.Instance.BattleEnd();
             }
         }
     }

@@ -11,6 +11,11 @@ public abstract class ICharClass
 		get;
 		set;
     }
+	public abstract List<Ability> UnlearnedAbilities
+    {
+		get;
+		set;
+    }
 
 	public abstract Resource Resource
 	{

@@ -561,11 +561,11 @@ public class BattleManager : MonoBehaviour
     void AbilityMenuDescend() {
         int oldPos = abilityMenuPos;
         abilityMenuPos++;
-        if (abilityMenuPos / 4 > oldPos / 4) {
-            PopulateAbilityMenu(_abilities);
-        }
         if (abilityMenuPos > _abilities.Count - 1) {
             abilityMenuPos = 0;
+            PopulateAbilityMenu(_abilities);
+        }
+        if (abilityMenuPos / 4 > oldPos / 4) {
             PopulateAbilityMenu(_abilities);
         }
         UpdateAbilityMenuSelection();
@@ -622,6 +622,18 @@ public class BattleManager : MonoBehaviour
     }
 
     public void InflictDamageToAllUnits(UnitType unitType, Unit caster, float damage) {
+        
+        if (caster != null) {
+            if (caster.statusEffects.Count > 0) {
+                StatusEffect statusEffect = caster.statusEffects.Find(x => x.type == StatusEffectType.IncreaseAttackSingleUse);
+                if (statusEffect != null) {
+                    IncreaseAttack increaseAttack = (IncreaseAttack) statusEffect;
+                    damage =(float) damage * (1f + increaseAttack.magnitude);
+                    caster.statusEffects.Remove(statusEffect);
+                }
+            }
+        }
+
         if (unitType == UnitType.Enemy) {
             bool eventSet = false;
             foreach(GameObject enemy in enemies) {

@@ -11,6 +11,11 @@ public class Magician : ICharClass
 		set;
 	}
 
+	public override List<Ability> UnlearnedAbilities {
+		get;
+		set;
+	}
+
 	public override Resource Resource
 	{
 		get;

@@ -11,6 +11,10 @@ public class Berserker : ICharClass
 		get;
 		set;
     }
+	public override List<Ability> UnlearnedAbilities {
+		get;
+		set;
+	}
 
 	public override Resource Resource
 	{
@@ -69,7 +73,9 @@ public class Berserker : ICharClass
 		{
 			new Lunge(),
 			new Whirlwind(),
-			new FocusEnergy(),
+			new FocusEnergy()
+		};
+		UnlearnedAbilities = new List<Ability> {
 			new FocusPower(),
 			new Stoneskin(),
 			new Unwind(),
