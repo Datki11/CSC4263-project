@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReduceDamage : StatusEffect
+public class IncreaseSpeed : StatusEffect
 {
     public float magnitude;
-    public ReduceDamage() {
-        type = StatusEffectType.ReduceDamage;
+
+    public IncreaseSpeed() {
+        type = StatusEffectType.Speed;
     }
 }

@@ -10,16 +10,6 @@ public class Unwind : Ability
         Type = TargetType.Self;
         Cost = 0;
     }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public override void Action(Unit target, Unit caster) {
         BattleManager.Instance.HealWithRage();

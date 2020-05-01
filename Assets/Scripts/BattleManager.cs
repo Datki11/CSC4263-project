@@ -321,15 +321,23 @@ public class BattleManager : MonoBehaviour
                 Player player = GameObject.FindWithTag("PlayerUnit").GetComponent<Player>();
                 var playerResource = player.Class.Resource;
                 playerResource.Current += player.Speed * 2;
+                StatusEffect st = player.statusEffects.Find(x => x.type == StatusEffectType.Speed);
+                if (st != null) {
+                    playerResource.Current += player.Speed * 2;
+                }
                 if (playerResource.Current > playerResource.BaseMax)
                     playerResource.Current = playerResource.BaseMax;
                 playerMenu.SetActive(true);
+                List<StatusEffect> effectsToRemove = new List<StatusEffect>();
                 foreach(StatusEffect statusEffect in player.statusEffects) {
                     statusEffect.rounds--;
                     if (statusEffect.rounds <= 0) {
-                        player.statusEffects.Remove(statusEffect);
+                        effectsToRemove.Add(statusEffect);
                         
                     }
+                }
+                foreach (StatusEffect statusEffect in effectsToRemove) {
+                    player.statusEffects.Remove(statusEffect);
                 }
             }
             else {
@@ -696,6 +704,27 @@ public class BattleManager : MonoBehaviour
         }
         GameObject textObj = Instantiate(playerBattleEndText, playerObj.transform.position + new Vector3(0,2f,0), Quaternion.identity);
         textObj.GetComponent<BattleEndText>().SetText("+ Attack");
+        textObj.GetComponent<BattleEndText>().SetColor(Color.green);
+        Invoke("NextTurn", 1.5f);
+
+    }
+
+    public void IncreaseSpeed(Unit target, float percent, int rounds) {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("PlayerUnit").gameObject;
+        Player player = playerObj.GetComponent<Player>();
+        IncreaseSpeed statusEffect = (IncreaseSpeed) player.statusEffects.Find(x => x.type == StatusEffectType.Speed);
+        if (statusEffect != null) {
+            statusEffect.rounds = rounds;
+            statusEffect.magnitude = percent;
+        }
+        else {
+            statusEffect = new IncreaseSpeed();
+            statusEffect.rounds = rounds;
+            statusEffect.magnitude = percent;
+            player.statusEffects.Add(statusEffect);
+        }
+        GameObject textObj = Instantiate(playerBattleEndText, playerObj.transform.position + new Vector3(0,2f,0), Quaternion.identity);
+        textObj.GetComponent<BattleEndText>().SetText("+ Speed");
         textObj.GetComponent<BattleEndText>().SetColor(Color.green);
         Invoke("NextTurn", 1.5f);
 
