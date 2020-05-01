@@ -34,6 +34,8 @@ public class ShopMenu : MonoBehaviour
         itemsInStock = new Dictionary<Item, int>();
         itemsInStock.Add(new Potion(), 10);
         itemsInStock.Add(new Firecracker(), 15);
+        itemsInStock.Add(new Adrenaline(), 15);
+        itemsInStock.Add(new BigPotion(), 25);
     }
     void Start()
     {

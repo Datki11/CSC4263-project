@@ -153,6 +153,10 @@ public class BattleManager : MonoBehaviour
                     playerItemMenu.SetActive(true);
                     PopulateItemMenu(characters[0].GetComponent<Player>().Items);
                 }
+                else if (playerMenuPos == 2) {
+                    AttemptToFlee();
+                    playerMenu.SetActive(false);
+                }
             }
             else if (playerAbilityMenu.activeSelf) {
 
@@ -247,7 +251,7 @@ public class BattleManager : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.X)) {
+        if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Escape)) {
             if (playerAbilityMenu.activeSelf) {
                 playerAbilityMenu.SetActive(false);
                 playerMenu.SetActive(true);
@@ -325,6 +329,8 @@ public class BattleManager : MonoBehaviour
         e.Act();
     }
 
+    
+
     void SetupWorld(Scene scene, LoadSceneMode mode) {
 
         //Transfer player stats to the world scene
@@ -394,6 +400,28 @@ public class BattleManager : MonoBehaviour
         }
         else 
             BattleEnd();
+    }
+
+    void AttemptToFlee() {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("PlayerUnit").gameObject;
+        //33% chance of failure
+        if(Random.Range(0f, 1f) <= 0.33f || isFinalBoss) {
+            
+            Player player = playerObj.GetComponent<Player>();
+            GameObject textObj = Instantiate(playerBattleEndText, playerObj.transform.position + new Vector3(0,2f,0), Quaternion.identity);
+            textObj.GetComponent<BattleEndText>().SetText("Failed to escape");
+            textObj.GetComponent<BattleEndText>().SetColor(Color.red);
+            Invoke("NextTurn", 1.5f);
+        }
+        else {
+            playerObj.GetComponent<Rigidbody2D>().velocity = new Vector2(35f, 0f);
+            GameObject textObj = Instantiate(playerBattleEndText, playerObj.transform.position + new Vector3(0,2f,0), Quaternion.identity);
+            textObj.GetComponent<BattleEndText>().SetText("Success!");
+            textObj.GetComponent<BattleEndText>().SetColor(Color.green);
+            Invoke("BattleEnd", 1.8f);
+        }
+
+
     }
 
     void CheckUnitStatuses() {
@@ -551,6 +579,19 @@ public class BattleManager : MonoBehaviour
         dText.SetColor(Color.green);
         dText.destroyed.AddListener(CheckUnitStatuses);
     }
+    public void IncreaseRage(Unit _target, float amount) {
+        Player target = characters[0].GetComponent<Player>();
+        target.Class.Resource.Current += (int) amount;
+        if (target.Class.Resource.Current > target.Class.Resource.BaseMax)
+            target.Class.Resource.Current = target.Class.Resource.BaseMax;
+        var pos = target.gameObject.transform.position;
+        var o = Instantiate(damageText, pos + new Vector3(0.25f,target.gameObject.GetComponent<SpriteRenderer>().bounds.size.y / 2,0), Quaternion.identity);
+        var dText = o.GetComponent<DamageText>();
+        dText.SetText( (int) amount );
+        dText.SetColor(Color.green);
+        dText.destroyed.AddListener(CheckUnitStatuses);
+    }
+
 
     private void EndEnemyTurn() {
         Invoke("NextTurn",0.4f);

@@ -89,6 +89,8 @@ public class Player : Character
 			Items = new Dictionary<Item, int>();
 			Items.Add(new Potion(), 3);
 			Items.Add(new Firecracker(), 2);
+			Items.Add(new Adrenaline(), 2);
+			Items.Add(new BigPotion(), 2);
 			//Items.Add(new Firecracker(), 2);
 		
     }
