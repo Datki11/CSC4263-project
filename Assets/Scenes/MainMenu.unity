@@ -419,15 +419,15 @@ MonoBehaviour:
     Cancel/Back
     - X
 
-    Quit game: Esc
+    Menu - Esc
 
 
 
 
     Goals:
 
-    Collect items and defeat enemies
-    for a shot at the boss'
+    Collect items and defeat enemies for
+    a shot at the boss'
 --- !u!222 &99365083
 CanvasRenderer:
   m_ObjectHideFlags: 0
