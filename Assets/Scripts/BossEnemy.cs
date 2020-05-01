@@ -10,6 +10,7 @@ public class BossEnemy : Enemy
         base.Awake();
         Abilities = new List<Ability>();
         Abilities.Add(new Slam());
+        Abilities.Add(new BoneSkin());
         MaxHealth = 60;
         CurrentHealth = 60;
         Attack = 5;
