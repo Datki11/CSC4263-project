@@ -51,8 +51,8 @@ public abstract class Enemy : Unit
 
 		//Default implementation is a completely random attack
         List<GameObject> characters = BattleManager.Instance.GetCharacters();
-        int characterNum = Mathf.RoundToInt(Random.Range(0, characters.Count - 1));
-        int abilityNum = Mathf.RoundToInt(Random.Range(0, Abilities.Count - 1));
+        int characterNum = Mathf.RoundToInt(Random.Range(0, characters.Count));
+        int abilityNum = Mathf.RoundToInt(Random.Range(0, Abilities.Count));
         Abilities[abilityNum].Action(characters[characterNum].GetComponent<Unit>(), this);
 		AttackAnimate();
 	}
