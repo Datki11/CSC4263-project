@@ -284,7 +284,9 @@ MonoBehaviour:
   shopPrefab: {fileID: 2722168806454646972, guid: 662d8b15759654197aa9227944ceac54,
     type: 3}
   enemies:
-  - {fileID: 615613206895032766, guid: 6717357686f7c46f286cc84ec600dd65, type: 3}
+  - {fileID: 5888258562294097019, guid: b58561c99890f409f8001ac060d7c8f4, type: 3}
+  - {fileID: 531102517320517033, guid: 7023ee4ebc181432e9735c9c7acb3f4d, type: 3}
+  - {fileID: 4132392697637737474, guid: 6cbb595e05abf4104934d6e4ca01f8ef, type: 3}
   - {fileID: 3188355035353481452, guid: 961e5acb8f97048789abb352f20292c1, type: 3}
 --- !u!4 &1203052336
 Transform:
