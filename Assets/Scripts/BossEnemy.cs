@@ -11,6 +11,7 @@ public class BossEnemy : Enemy
         Abilities = new List<Ability>();
         Abilities.Add(new Slam());
         Abilities.Add(new BoneSkin());
+        //Abilities.Add(new SummonTentacle());
         Items = new Dictionary<Item, int>();
         Items.Add(new Potion(), 2);
         Items.Add(new BigPotion(), 1);
@@ -19,5 +20,10 @@ public class BossEnemy : Enemy
         Attack = 5;
         Defense = 3;
         Speed = 6;
+    }
+
+    public override void Act()
+    {
+        base.Act();
     }
 }
