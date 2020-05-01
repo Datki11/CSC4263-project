@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Ability
 {
+    public UnityEvent attackStart = new UnityEvent();
     public string Name {get; set;}
     public string Description {get; set;}
 

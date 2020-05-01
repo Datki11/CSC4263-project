@@ -91,9 +91,15 @@ public class Player : Character
 			Items.Add(new Firecracker(), 2);
 			Items.Add(new Adrenaline(), 2);
 			Items.Add(new BigPotion(), 2);
+
+			
 			//Items.Add(new Firecracker(), 2);
 		
     }
+	public void Start() {
+		Ability ability = Class.Abilities.Find(x => x.Name =="Lunge");
+		ability.attackStart.AddListener(AttackAnimate);
+	}
 
 	public void TransferValues(Player player) {
 		TransferValues( (Unit) player);
@@ -115,6 +121,32 @@ public class Player : Character
 		}
 		else {
 			Items.Add(item, 1);
+		}
+	}
+
+	private float startX;
+
+	public void AttackAnimate() {
+		startX = transform.position.x;
+		GoLeft();
+	}
+	public void GoRight() {
+		transform.Translate(5 * Time.deltaTime, 0f, 0f);
+		if (transform.position.x - startX >= 0) {
+			transform.position = new Vector3(startX,transform.position.y,transform.position.z);
+		}
+		else {
+			Invoke("GoRight", 0.01f);
+		}
+	}
+	public void GoLeft() {
+		transform.Translate(-5 * Time.deltaTime, 0f, 0f);
+		if (transform.position.x - startX <= -1) {
+			GoRight();
+			
+		}
+		else {
+			Invoke("GoLeft", 0.01f);
 		}
 	}
 
