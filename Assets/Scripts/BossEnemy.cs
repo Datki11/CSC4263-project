@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class BossEnemy : Enemy
 {
-    // Start is called before the first frame update
+    public GameObject mobToAdd;
     public override void Awake()
     {
         base.Awake();
         Abilities = new List<Ability>();
         Abilities.Add(new Slam());
         Abilities.Add(new BoneSkin());
-        //Abilities.Add(new SummonTentacle());
+        Abilities.Add(new SummonTentacle());
         Items = new Dictionary<Item, int>();
         Items.Add(new Potion(), 2);
         Items.Add(new BigPotion(), 1);

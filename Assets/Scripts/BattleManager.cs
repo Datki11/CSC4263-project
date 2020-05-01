@@ -371,7 +371,10 @@ public class BattleManager : MonoBehaviour
         e.Act();
     }
 
-    
+    public void EnemyAdded()
+    {
+        turnPos++;
+    }
 
     void SetupWorld(Scene scene, LoadSceneMode mode) {
 
@@ -773,7 +776,7 @@ public class BattleManager : MonoBehaviour
     }
 
 
-    private void EndEnemyTurn() {
+    public void EndEnemyTurn() {
         Invoke("NextTurn",0.4f);
     }
 

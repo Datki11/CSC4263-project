@@ -119,6 +119,7 @@ MonoBehaviour:
   killed:
     m_PersistentCalls:
       m_Calls: []
+  mobToAdd: {fileID: 148362205619118191, guid: 099a2802b35d34d3c9ed1d8946bc20f9, type: 3}
 --- !u!1001 &6749501994868206953
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -14,6 +14,9 @@ public class SummonTentacle : Ability
 
     public override void Action(Unit target, Unit caster)
     {
-        GameObject.Instantiate(GameObject.Find("Tentacle Enemy"), GameObject.Find("Boss").transform);
+        BossEnemy boss = caster as BossEnemy;
+        BattleManager.Instantiate(boss.mobToAdd, caster.transform);
+        BattleManager.Instance.EnemyAdded();
+        BattleManager.Instance.EndEnemyTurn();
     }
 }
