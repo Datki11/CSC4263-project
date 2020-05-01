@@ -11,16 +11,13 @@ public class BossEnemy : Enemy
         Abilities = new List<Ability>();
         Abilities.Add(new Slam());
         Abilities.Add(new BoneSkin());
+        Items = new Dictionary<Item, int>();
+        Items.Add(new Potion(), 2);
+        Items.Add(new BigPotion(), 1);
         MaxHealth = 60;
         CurrentHealth = 60;
         Attack = 5;
         Defense = 3;
         Speed = 6;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
