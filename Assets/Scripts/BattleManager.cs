@@ -38,6 +38,8 @@ public class BattleManager : MonoBehaviour
 
     public GameObject playerBattleEndText;
 
+    public bool nextTurnExecuting = false;
+
     private static BattleManager _instance;
 
     //For the prototype
@@ -296,84 +298,86 @@ public class BattleManager : MonoBehaviour
     }
 
     void NextTurn() {
+        if (true) {
 
-        
+            enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemyUnit"));
+            unitSelectionPos = 0;
 
-        enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemyUnit"));
-        unitSelectionPos = 0;
+            //If there are no enemies left, the battle is over and will return to the world scene
+            if (enemies.Count <= 0) {
+                //For the prototype, game ends if fighting the boss
+                if (isFinalBoss) {
+                    GameWon();
+                }
+                else {
+                    
+                    //Prevents the function from being called twice
+                    if (battleEnded)
+                        return;
+                    else
+                        battleEnded =  true;
+                    StartCoroutine("ShowBattleEndNotifications");
+                }
+            }
 
-        //If there are no enemies left, the battle is over and will return to the world scene
-        if (enemies.Count <= 0) {
-            //For the prototype, game ends if fighting the boss
-            if (isFinalBoss) {
-                GameWon();
+            //Currently, this is set up to where the max party size for the player is 1
+            else if (turn == Turn.Player) {
+                turn = Turn.Enemy;
+                turnPos = 0;
+                DoEnemyTurn();
             }
             else {
-                
-                //Prevents the function from being called twice
-                if (battleEnded)
-                    return;
-                else
-                    battleEnded =  true;
-                StartCoroutine("ShowBattleEndNotifications");
-            }
-        }
-
-        //Currently, this is set up to where the max party size for the player is 1
-        else if (turn == Turn.Player) {
-            turn = Turn.Enemy;
-            turnPos = 0;
-            DoEnemyTurn();
-        }
-        else {
-            turnPos++;
-            if (turnPos > enemies.Count - 1) {
-                turn = Turn.Player;
-                Player player = GameObject.FindWithTag("PlayerUnit").GetComponent<Player>();
-                var playerResource = player.Class.Resource;
-                playerResource.Current += player.Speed * 2;
-                StatusEffect st = player.statusEffects.Find(x => x.type == StatusEffectType.Speed);
-                if (st != null) {
+                turnPos++;
+                if (turnPos > enemies.Count - 1) {
+                    turn = Turn.Player;
+                    Player player = GameObject.FindWithTag("PlayerUnit").GetComponent<Player>();
+                    var playerResource = player.Class.Resource;
                     playerResource.Current += player.Speed * 2;
-                }
-                if (playerResource.Current > playerResource.BaseMax)
-                    playerResource.Current = playerResource.BaseMax;
-                playerMenu.SetActive(true);
+                    StatusEffect st = player.statusEffects.Find(x => x.type == StatusEffectType.Speed);
+                    if (st != null) {
+                        playerResource.Current += player.Speed * 2;
+                    }
+                    if (playerResource.Current > playerResource.BaseMax)
+                        playerResource.Current = playerResource.BaseMax;
+                    playerMenu.SetActive(true);
 
-                foreach(GameObject enemyObj in enemies) {
-                    List<StatusEffect> effectToRemove = new List<StatusEffect>();
-                    Enemy enemy = enemyObj.GetComponent<Enemy>();
-                    foreach(StatusEffect statusEffect in enemy.statusEffects) {
+                    foreach(GameObject enemyObj in enemies) {
+                        List<StatusEffect> effectToRemove = new List<StatusEffect>();
+                        Enemy enemy = enemyObj.GetComponent<Enemy>();
+                        foreach(StatusEffect statusEffect in enemy.statusEffects) {
+                            statusEffect.rounds--;
+                            if (statusEffect.rounds <= 0) {
+                                effectToRemove.Add(statusEffect);
+                                
+                            }
+                        }
+                        foreach (StatusEffect statusEffect in effectToRemove) {
+                            player.statusEffects.Remove(statusEffect);
+                        }
+                    }
+
+                    List<StatusEffect> effectsToRemove = new List<StatusEffect>();
+                    foreach(StatusEffect statusEffect in player.statusEffects) {
                         statusEffect.rounds--;
                         if (statusEffect.rounds <= 0) {
-                            effectToRemove.Add(statusEffect);
+                            effectsToRemove.Add(statusEffect);
                             
                         }
                     }
-                    foreach (StatusEffect statusEffect in effectToRemove) {
+                    foreach (StatusEffect statusEffect in effectsToRemove) {
                         player.statusEffects.Remove(statusEffect);
                     }
+
+                    
+
+
                 }
-
-                List<StatusEffect> effectsToRemove = new List<StatusEffect>();
-                foreach(StatusEffect statusEffect in player.statusEffects) {
-                    statusEffect.rounds--;
-                    if (statusEffect.rounds <= 0) {
-                        effectsToRemove.Add(statusEffect);
-                        
-                    }
+                else {
+                    DoEnemyTurn();
                 }
-                foreach (StatusEffect statusEffect in effectsToRemove) {
-                    player.statusEffects.Remove(statusEffect);
-                }
-
-                
-
-
             }
-            else {
-                DoEnemyTurn();
-            }
+
+            nextTurnExecuting = false;
         }
     }
 
@@ -384,9 +388,8 @@ public class BattleManager : MonoBehaviour
 
     public void EnemyAdded()
     {
-        enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemyUnit"));
-        turnPos++;
-        Invoke("NextTurn",1.5f);
+                nextTurnExecuting = true;
+                Invoke("NextTurn",1.5f);
     }
 
     public int NumberEnemy()
@@ -408,7 +411,10 @@ public class BattleManager : MonoBehaviour
     }
 
     void UnitDeathEnd() {
-        Invoke("NextTurn",0.2f);
+        if (nextTurnExecuting == false) {
+                nextTurnExecuting = true;
+                Invoke("NextTurn",0.2f);
+            }
     }
     void PlayerDeathEnd() {
         Invoke("GameOver", 1f);
@@ -471,7 +477,10 @@ public class BattleManager : MonoBehaviour
             GameObject textObj = Instantiate(playerBattleEndText, playerObj.transform.position + new Vector3(0,2f,0), Quaternion.identity);
             textObj.GetComponent<BattleEndText>().SetText("Failed to escape");
             textObj.GetComponent<BattleEndText>().SetColor(Color.red);
-            Invoke("NextTurn", 1.5f);
+            if (nextTurnExecuting == false) {
+                nextTurnExecuting = true;
+                Invoke("NextTurn",1.5f);
+            }
         }
         else {
             playerObj.GetComponent<Rigidbody2D>().velocity = new Vector2(35f, 0f);
@@ -507,7 +516,10 @@ public class BattleManager : MonoBehaviour
             }
         }
         if (!unitIsDying) {
-            Invoke("NextTurn",0.3f);
+            if (nextTurnExecuting == false) {
+                nextTurnExecuting = true;
+                Invoke("NextTurn",0.3f);
+            }
         }
     }
 
@@ -732,7 +744,10 @@ public class BattleManager : MonoBehaviour
         GameObject textObj = Instantiate(playerBattleEndText, target.transform.position + new Vector3(0,2f,0), Quaternion.identity);
         textObj.GetComponent<BattleEndText>().SetText("+ Defense");
         textObj.GetComponent<BattleEndText>().SetColor(Color.green);
-        Invoke("NextTurn", 1.5f);
+        if (nextTurnExecuting == false) {
+                nextTurnExecuting = true;
+                Invoke("NextTurn",1.5f);
+            }
 
     }
 
@@ -753,7 +768,10 @@ public class BattleManager : MonoBehaviour
         GameObject textObj = Instantiate(playerBattleEndText, playerObj.transform.position + new Vector3(0,2f,0), Quaternion.identity);
         textObj.GetComponent<BattleEndText>().SetText("+ Attack");
         textObj.GetComponent<BattleEndText>().SetColor(Color.green);
-        Invoke("NextTurn", 1.5f);
+        if (nextTurnExecuting == false) {
+                nextTurnExecuting = true;
+                Invoke("NextTurn",1.5f);
+            }
 
     }
 
@@ -774,7 +792,10 @@ public class BattleManager : MonoBehaviour
         GameObject textObj = Instantiate(playerBattleEndText, playerObj.transform.position + new Vector3(0,2f,0), Quaternion.identity);
         textObj.GetComponent<BattleEndText>().SetText("+ Speed");
         textObj.GetComponent<BattleEndText>().SetColor(Color.green);
-        Invoke("NextTurn", 1.5f);
+        if (nextTurnExecuting == false) {
+                nextTurnExecuting = true;
+                Invoke("NextTurn",1.5f);
+            }
 
     }
     public void IncreaseRage(Unit _target, float amount) {
@@ -792,7 +813,10 @@ public class BattleManager : MonoBehaviour
 
 
     public void EndEnemyTurn() {
-        Invoke("NextTurn",1.5f);
+        if (nextTurnExecuting == false) {
+                nextTurnExecuting = true;
+                Invoke("NextTurn",1.5f);
+            }
     }
 
     public List<GameObject> GetCharacters() {
