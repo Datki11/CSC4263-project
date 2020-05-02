@@ -7,24 +7,15 @@ public class Chest : MonoBehaviour
 {
     public GameObject openChest;
     public GameObject chestItemText;
-    public string itemName;
     public Item item;
     // Start is called before the first frame update
     void Start()
     {
-        //Lord forgive me
-        if (itemName == "Potion")
-            item = new Potion();
-        else if (itemName == "Firecracker")
-            item = new Firecracker();
-
-        //default item
-        else
-            item = new Potion();
+        
     }
 
     public void Open() {
-        Instantiate(chestItemText, transform.position, Quaternion.identity).GetComponent<ChestItemText>().SetText(itemName);
+        Instantiate(chestItemText, transform.position, Quaternion.identity).GetComponent<ChestItemText>().SetText(item.Name);
         TurnToOpenedChest();
         
     }

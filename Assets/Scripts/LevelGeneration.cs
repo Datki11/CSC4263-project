@@ -332,7 +332,7 @@ public class LevelGeneration : MonoBehaviour
                 }
 
             GameObject chest = Instantiate(chestPrefab, new Vector3(cellLocation.column * 42 - 26 + chestColumn, -cellLocation.row * 24 - chestRow + 4, 0f), Quaternion.identity, transform);
-            chest.GetComponent<Chest>().itemName = RandomItem();
+            chest.GetComponent<Chest>().item = RandomItem();
             }
 
             //Spawning rocks
@@ -393,18 +393,22 @@ public class LevelGeneration : MonoBehaviour
 
     }
 
-    string RandomItem() {
-        if (Mathf.RoundToInt(Random.Range(0,2)) == 0) {
-            return "Potion";
-        }
-        else {
-            
-            if (firecrackersSpawned >= 2)
-                return "Potion";
-            else {
-                firecrackersSpawned++;
-                return "Firecracker";
-            }
+    Item RandomItem() {
+        int rand = (Random.Range(0,3));
+        
+        switch (rand)
+        {
+            case 0:
+                return new Potion();
+
+            case 1:
+                return new Firecracker();
+
+            case 2:
+                return new Gold();
+
+            default:
+                return new Gold();
         }
 
     }

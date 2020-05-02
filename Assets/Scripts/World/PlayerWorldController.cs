@@ -42,8 +42,10 @@ public class PlayerWorldController : MonoBehaviour
                     interactableObjects.Remove(obj);
                     Item chestItem = obj.GetComponent<Chest>().item;
                     obj.GetComponent<Chest>().Open();
-                    
-                    GetComponent<Player>().AddItem(chestItem);
+                    if (chestItem is Gold)
+                        GetComponent<Player>().Gold += UnityEngine.Random.Range(10, 21);
+                    else
+                        GetComponent<Player>().AddItem(chestItem);
                 }
                 else if (obj.tag == "Shop") {
                     GlobalControls.Instance.OpenShopMenu();
