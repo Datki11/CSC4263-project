@@ -21,7 +21,6 @@ public class BossEnemy : Enemy
         Abilities.Add(ability);
         Items = new Dictionary<Item, int>();
         Items.Add(new Potion(), 2);
-        Items.Add(new BigPotion(), 1);
         MaxHealth = 60;
         CurrentHealth = 60;
         Attack = 5;

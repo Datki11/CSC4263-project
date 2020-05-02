@@ -3738,6 +3738,7 @@ MonoBehaviour:
   world: {fileID: 0}
   playerBattleEndText: {fileID: 3965855307198060765, guid: 80b73165e0a434aa696ba66201922f76,
     type: 3}
+  nextTurnExecuting: 0
   isFinalBoss: 0
 --- !u!1 &1865567122
 GameObject:

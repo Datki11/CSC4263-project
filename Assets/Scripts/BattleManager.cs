@@ -744,10 +744,8 @@ public class BattleManager : MonoBehaviour
         GameObject textObj = Instantiate(playerBattleEndText, target.transform.position + new Vector3(0,2f,0), Quaternion.identity);
         textObj.GetComponent<BattleEndText>().SetText("+ Defense");
         textObj.GetComponent<BattleEndText>().SetColor(Color.green);
-        if (nextTurnExecuting == false) {
                 nextTurnExecuting = true;
                 Invoke("NextTurn",1.5f);
-            }
 
     }
 
