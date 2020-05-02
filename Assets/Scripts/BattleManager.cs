@@ -384,7 +384,8 @@ public class BattleManager : MonoBehaviour
 
     public void EnemyAdded()
     {
-        turnPos++;
+        enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemyUnit"));
+        Invoke("NextTurn",1.5f);
     }
 
     public int NumberEnemy()
@@ -790,7 +791,8 @@ public class BattleManager : MonoBehaviour
 
 
     public void EndEnemyTurn() {
-        Invoke("NextTurn",0.4f);
+        enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemyUnit"));
+        Invoke("NextTurn",1.5f);
     }
 
     public List<GameObject> GetCharacters() {

@@ -73,7 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0f9c59ab55de2644bb85c0001c27277c, type: 3}
+  m_Sprite: {fileID: -2240994688644343673, guid: 654c036cfae3540a68bb7de6b4585faf,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -92,9 +93,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1489248783633124187}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 42635b473d7d34174b9e3188774400e6, type: 2}
+  m_Controller: {fileID: 9100000, guid: a1b939fce1654406da7224e69f3e51ec, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -119,6 +120,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   mobToAdd: {fileID: 148362205619118191, guid: 099a2802b35d34d3c9ed1d8946bc20f9, type: 3}
+  tentacle1: {fileID: 0}
+  tentacle2: {fileID: 0}
 --- !u!1001 &6749501994868206953
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -184,12 +187,12 @@ PrefabInstance:
     - target: {fileID: 8885815437861455049, guid: 15f4c85e225e24c54806821a81e2fdd1,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -2.5749998
+      value: -3.32
       objectReference: {fileID: 0}
     - target: {fileID: 8885815437861455049, guid: 15f4c85e225e24c54806821a81e2fdd1,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4.09
+      value: 7.5899997
       objectReference: {fileID: 0}
     - target: {fileID: 8885815437861455049, guid: 15f4c85e225e24c54806821a81e2fdd1,
         type: 3}

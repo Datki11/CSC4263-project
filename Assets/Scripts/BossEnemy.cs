@@ -5,13 +5,20 @@ using UnityEngine;
 public class BossEnemy : Enemy
 {
     public GameObject mobToAdd;
+    private Animator animator;
+    public GameObject tentacle1;
+    public GameObject tentacle2;
     public override void Awake()
     {
         base.Awake();
         Abilities = new List<Ability>();
-        Abilities.Add(new Slam());
+        Ability ability = new Slam();
+        ability.attackStart.AddListener(SlamAnimate);
+        Abilities.Add(ability);
         Abilities.Add(new BoneSkin());
-        Abilities.Add(new SummonTentacle());
+        ability = new SummonTentacle();
+        ability.attackStart.AddListener(AttackAnimate);
+        Abilities.Add(ability);
         Items = new Dictionary<Item, int>();
         Items.Add(new Potion(), 2);
         Items.Add(new BigPotion(), 1);
@@ -20,6 +27,7 @@ public class BossEnemy : Enemy
         Attack = 5;
         Defense = 3;
         Speed = 6;
+        animator = GetComponent<Animator>();
     }
 
     public override void Act()
@@ -51,6 +59,9 @@ public class BossEnemy : Enemy
             }
 
             use = Random.Range(0, availableAbilities.Count); //Pick a random ability out of those available
+            //Don't use Summon if there are 3 enemies
+            if (availableAbilities[use].Name == "Summon Tentacle" && BattleManager.Instance.GetEnemies().Count >= 3)
+                use = 0;
             availableAbilities[use].Action(characters[characterNum].GetComponent<Unit>(), this); //Perform random ability
         }
         else if (use == 1) //Use a random Item
@@ -65,5 +76,9 @@ public class BossEnemy : Enemy
                 Items.Remove(itemKeys[use]); //Remove the item from inventory
             }
         }
+    }
+
+    public void SlamAnimate() {
+        animator.SetTrigger("Slam");
     }
 }

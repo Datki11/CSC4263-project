@@ -17,17 +17,22 @@ public class SummonTentacle : Ability
     {
         BossEnemy boss = caster as BossEnemy;
         List<GameObject> enemies = BattleManager.Instance.GetEnemies();
-        if (enemies.Count <= 2)
+        if (boss.tentacle1 == null)
         {
-            tentacle = BattleManager.Instantiate(boss.mobToAdd, boss.transform);
-            tentacle.transform.position += new Vector3(5.0f, -3.0f, -200.0f);
+            tentacle = BattleManager.Instantiate(boss.mobToAdd, boss.transform.position, Quaternion.identity);
+            boss.tentacle1 = tentacle;
+            tentacle.transform.position += new Vector3(10.0f, 0f, 0f);
+            
         }
-        else
+        else if (boss.tentacle2 == null)
         {
-            tentacle = BattleManager.Instantiate(boss.mobToAdd, boss.transform);
-            tentacle.transform.position += new Vector3(10.0f, 3.0f, -200.0f);
+            tentacle = BattleManager.Instantiate(boss.mobToAdd, boss.transform.position, Quaternion.identity);
+            boss.tentacle2 = tentacle;
+            
+            tentacle.transform.position += new Vector3(7.0f, -7.0f, 0f);
         }
         BattleManager.Instance.EnemyAdded();
-        BattleManager.Instance.EndEnemyTurn();
+        attackStart?.Invoke();
+        
     }
 }

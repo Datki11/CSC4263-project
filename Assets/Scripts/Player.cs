@@ -67,10 +67,13 @@ public class Player : Character
     }
 	#endregion
 
+	private Animator animator;
+
 	#region MonoBehaviour
 	// Start is called before the first frame update
 	public override void Awake()
     {
+			animator = GetComponent<Animator>();
 			base.Awake();
 			MaxHealth = 40;
 			CurrentHealth = 40;
@@ -99,6 +102,10 @@ public class Player : Character
 	public void Start() {
 		Ability ability = Class.Abilities.Find(x => x.Name =="Lunge");
 		ability.attackStart.AddListener(AttackAnimate);
+		ability = Class.Abilities.Find(x => x.Name == "Whirlwind");
+		ability.attackStart.AddListener(WhirlwindAnimate);
+		ability = Class.Abilities.Find(x => x.Name == "Fury");
+		ability.attackStart.AddListener(FuryAnimate);
 	}
 
 	public void TransferValues(Player player) {
@@ -130,6 +137,9 @@ public class Player : Character
 		startX = transform.position.x;
 		GoLeft();
 	}
+	public void FuryAnimate() {
+		animator.SetTrigger("Fury");
+	}
 	public void GoRight() {
 		transform.Translate(5 * Time.deltaTime, 0f, 0f);
 		if (transform.position.x - startX >= 0) {
@@ -150,8 +160,9 @@ public class Player : Character
 		}
 	}
 
-    // Update is called once per frame
-	void Update() {
+	public void WhirlwindAnimate() {
+		animator.SetTrigger("Whirlwind");
 	}
+
     #endregion
 }

@@ -44,7 +44,7 @@ public abstract class Enemy : Unit
 	}
 
 
-	private float startX;
+	protected float startX;
 	public override void Awake() {
 		base.Awake();
 		statusEffects = new List<StatusEffect>();
@@ -63,7 +63,7 @@ public abstract class Enemy : Unit
 			Abilities[abilityNum].Action(characters[characterNum].GetComponent<Unit>(), this);
 		AttackAnimate();
 	}
-	private void AttackAnimate() {
+	protected void AttackAnimate() {
 		startX = transform.position.x;
 		GoRight();
 	}
