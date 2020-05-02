@@ -19,8 +19,8 @@ public class Slap : Ability
     }
 
     public override void Action(Unit target, Unit caster) {
-        int damageMin = Mathf.Max(1, 7 - caster.Defense / 2);
-        int damageMax = Mathf.Max(1, 10 - caster.Defense / 2);
+        int damageMin = Mathf.Max(1, 6 - caster.Defense / 2);
+        int damageMax = Mathf.Max(1, 8 - caster.Defense / 2);
 
         BattleManager.Instance.InflictDamage(target, caster, Mathf.RoundToInt(Random.Range(damageMin,damageMax)));
     }

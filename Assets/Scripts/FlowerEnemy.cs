@@ -9,12 +9,12 @@ public class FlowerEnemy : Enemy
         base.Awake();
         Abilities = new List<Ability>();
         Abilities.Add(new Bite());
-        MaxHealth = 10;
-        CurrentHealth = 10;
+        MaxHealth = 20;
+        CurrentHealth = 20;
         Attack = 5;
         Defense = 3;
         Speed = 6;
-        Exp = 7;
+        Exp = 12;
     }
 
     // Update is called once per frame

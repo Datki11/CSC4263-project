@@ -9,12 +9,12 @@ public class TentacleEnemy : Enemy
         base.Awake();
         Abilities = new List<Ability>();
         Abilities.Add(new Slap());
-        MaxHealth = 20;
-        CurrentHealth = 20;
+        MaxHealth = 10;
+        CurrentHealth = 10;
         Attack = 5;
         Defense = 3;
         Speed = 6;
-        Exp = 12;
+        Exp = 7;
         GoldRange = new Vector2(5, 7);
     }
 

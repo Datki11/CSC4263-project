@@ -8,13 +8,13 @@ public class SkullEnemy : Enemy
     {
         base.Awake();
         Abilities = new List<Ability>();
-        Abilities.Add(new Bite());
-        MaxHealth = 25;
-        CurrentHealth = 25;
+        Abilities.Add(new Slap());
+        MaxHealth = 20;
+        CurrentHealth = 20;
         Attack = 5;
         Defense = 3;
         Speed = 6;
-        Exp = 17;
+        Exp = 14;
     }
 
     // Update is called once per frame
