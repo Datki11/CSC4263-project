@@ -8,7 +8,7 @@ public class BossWorld : EnemyWorld
     
     public override void SetupBattle(Scene scene, LoadSceneMode mode)
     {
-        base.SetupBattle(scene, mode);
         BattleManager.Instance.isFinalBoss = true;
+        base.SetupBattle(scene, mode);
     }
 }

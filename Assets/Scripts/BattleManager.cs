@@ -68,6 +68,17 @@ public class BattleManager : MonoBehaviour
     }
 
     void Start() {
+        AudioSource audio = GameObject.Find("Audio Source").GetComponent<AudioSource>();
+        if (isFinalBoss)
+        {
+            audio.clip = (AudioClip)Resources.Load("BossTheme");
+            audio.Play();
+        }
+        else
+        {
+            audio.clip = (AudioClip)Resources.Load("MonsterTheme");
+            audio.Play();
+        }
         characters = new List<GameObject>(GameObject.FindGameObjectsWithTag("PlayerUnit"));
         enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemyUnit"));
         playerStatusEffects = new List<StatusEffect>();
@@ -385,8 +396,6 @@ public class BattleManager : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player World").GetComponent<Player>().CurrentHealth = playerUnit.GetComponent<Player>().CurrentHealth;
         Destroy(playerUnit);
         SceneManager.sceneLoaded -= SetupWorld;
-        
-
     }
     void RemoveLoadingEvent() {
         SceneManager.sceneLoaded -= SetupWorld;
