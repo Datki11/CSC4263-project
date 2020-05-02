@@ -376,6 +376,10 @@ public class BattleManager : MonoBehaviour
         turnPos++;
     }
 
+    public int NumberEnemy()
+    {
+        return enemies.Count;
+    }
     void SetupWorld(Scene scene, LoadSceneMode mode) {
 
         //Transfer player stats to the world scene
@@ -782,5 +786,10 @@ public class BattleManager : MonoBehaviour
 
     public List<GameObject> GetCharacters() {
         return characters;
+    }
+
+    public List<GameObject> GetEnemies()
+    {
+        return enemies;
     }
 }

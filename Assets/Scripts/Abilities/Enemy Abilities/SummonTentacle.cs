@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SummonTentacle : Ability
 {
+    public GameObject tentacle;
     public SummonTentacle()
     {
         Name = "Summon Tentacle";
@@ -15,7 +16,17 @@ public class SummonTentacle : Ability
     public override void Action(Unit target, Unit caster)
     {
         BossEnemy boss = caster as BossEnemy;
-        BattleManager.Instantiate(boss.mobToAdd, caster.transform);
+        List<GameObject> enemies = BattleManager.Instance.GetEnemies();
+        if (enemies.Count <= 2)
+        {
+            tentacle = BattleManager.Instantiate(boss.mobToAdd, boss.transform);
+            tentacle.transform.position += new Vector3(5.0f, -3.0f, -200.0f);
+        }
+        else
+        {
+            tentacle = BattleManager.Instantiate(boss.mobToAdd, boss.transform);
+            tentacle.transform.position += new Vector3(10.0f, 3.0f, -200.0f);
+        }
         BattleManager.Instance.EnemyAdded();
         BattleManager.Instance.EndEnemyTurn();
     }
